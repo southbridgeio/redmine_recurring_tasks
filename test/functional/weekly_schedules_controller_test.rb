@@ -11,18 +11,26 @@ class WeeklySchedulesControllerTest < ActionController::TestCase
            :issue_statuses,
            :issues
 
+  def setup
+    Role.find(1).add_permission! :manage_schedule
+    Role.find(1).add_permission! :view_schedule
+  end
+
   def test_new
+    @request.session[:user_id] = 2
+
     with_settings default_language: 'en' do
       get :new, issue_id: 1
+
       assert_response :success
       assert_template 'new'
-
-      # project column
-      assert_select 'h2', text: 'Cannot print recipes'
+      assert_select 'legend', text: 'Cannot print recipes'
     end
   end
 
   def test_new_wrong_issue
+    @request.session[:user_id] = 2
+
     with_settings default_language: 'en' do
       get :new, issue_id: 666
       assert_response :not_found
@@ -30,6 +38,8 @@ class WeeklySchedulesControllerTest < ActionController::TestCase
   end
 
   def test_new_empty_issue
+    @request.session[:user_id] = 2
+
     with_settings default_language: 'en' do
       get :new
       assert_response :not_found
