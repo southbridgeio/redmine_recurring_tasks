@@ -3,6 +3,8 @@
     <fieldset class="box tabular"><legend><%= @schedule.issue.subject %></legend>
       <input type="hidden" name="issue_id" value="<%= @schedule.issue.id %>">
 
+      <%= error_messages_for 'schedule' %>
+
       <p>
         <label>
           <%= WeeklySchedule.human_attribute_name(:tracker) %>
