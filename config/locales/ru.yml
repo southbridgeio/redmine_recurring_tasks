@@ -1,0 +1,6 @@
+ru:
+  project_module_weekly_scheduler: Недельный планировщик
+  plugin_description: Недельный планировщик задач
+
+  permission_view_schedule: Просмотр расписания
+  permission_manage_schedule: Управление расписанием

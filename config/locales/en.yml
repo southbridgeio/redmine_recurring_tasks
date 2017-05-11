@@ -1,0 +1,6 @@
+# English strings go here for Rails i18n
+en:
+  plugin_description: Weekly scheduler
+
+  permission_view_schedule: View schedule
+  permission_manage_schedule: Manage schedule
