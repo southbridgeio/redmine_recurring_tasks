@@ -4,3 +4,15 @@ ru:
 
   permission_view_schedule: Просмотр расписания
   permission_manage_schedule: Управление расписанием
+
+  activerecord:
+    attributes:
+      weekly_schedule:
+        sunday: Воскресенье
+        monday: Понедельник
+        tuesday: Вторник
+        wednesday: Среда
+        thursday: Четверг
+        friday: Пятница
+        saturday: Суббота
+        time: Время

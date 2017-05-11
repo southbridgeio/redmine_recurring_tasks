@@ -1,0 +1,29 @@
+<% if controller_name == 'issues' && action_name == 'show' && User.current.allowed_to?(:view_schedule, @project) %>
+<div class="weekly-scheduler">
+  <%
+    schedule = WeeklySchedule.find_by(issue_id: @issue.id)
+  %>
+
+  <% if User.current.allowed_to?(:manage_schedule, @project) %>
+    <div class="contextual">
+      <% if schedule.present? %>
+        <a href="<%= edit_weekly_schedule_path(schedule.id) %>"><%= l(:button_change) %></a>
+      <% else %>
+        <a href="<%= new_weekly_schedule_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <h3><%= l(:project_module_weekly_scheduler) %></h3>
+
+  <% if schedule.present? %>
+    <ul>
+      <% schedule.days.each do |field| %>
+        <li>
+          <%= WeeklySchedule.human_attribute_name(field) %>, <%= schedule.time.to_s(:time) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<% end %>
