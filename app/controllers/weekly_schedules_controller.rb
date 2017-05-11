@@ -60,7 +60,6 @@ class WeeklySchedulesController < ApplicationController
       @issue = @schedule.issue
     else
       @issue = Issue.find(params[:issue_id])
-      p @issue.present?
     end
   rescue ActiveRecord::RecordNotFound
     render_404
