@@ -26,6 +26,10 @@ bundle exec rake weekly_scheduler:exec
 
 And to do it periodically you may use cron or another external scheduler.
 
+# Recommendation
+
+To get all parent issues I'd recommend make new tracker called "Templates", then when you creating new schedule for issue — select specific tracker in form.
+
 # License
 
 [MIT](https://github.com/constxife/weekly_scheduler/blob/master/LICENSE)
