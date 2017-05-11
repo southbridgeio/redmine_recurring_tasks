@@ -17,4 +17,4 @@ bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 
 # License
 
-[MIT](https://github.com/constxife/weekly_schedule/blob/master/License.md)
+[MIT](https://github.com/constxife/weekly_scheduler/blob/master/License.md)
