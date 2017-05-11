@@ -4,8 +4,8 @@ Plugin is designed to make periodically issues copies for dealing with repetitiv
 
 # Installation
 
-* **Ruby 2.3+**
-* **Redmine 3.3+**
+* Ruby 2.3+
+* Redmine 3.3+
 * Standart install plugin:
 
 ```
@@ -14,6 +14,17 @@ git clone https://github.com/constXife/weekly_scheduler.git plugins/weekly_sched
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
+
+# Run
+
+To run copying issues task you should run rake task
+
+```
+cd {REDMINE_ROOT}
+bundle exec rake weekly_scheduler:exec
+```
+
+And to do it periodically you may use cron or another external scheduler.
 
 # License
 
