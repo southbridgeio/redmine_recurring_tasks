@@ -6,6 +6,11 @@ class WeeklySchedulesController < ApplicationController
   before_filter :check_permission
 
   def new
+    existing_schedule = WeeklySchedule.find_by(issue: @issue)
+    if existing_schedule
+      return redirect_to edit_weekly_schedule_path(existing_schedule)
+    end
+
     @schedule = WeeklySchedule.new(tracker: @issue.tracker, issue: @issue)
   end
 
@@ -55,6 +60,7 @@ class WeeklySchedulesController < ApplicationController
       @issue = @schedule.issue
     else
       @issue = Issue.find(params[:issue_id])
+      p @issue.present?
     end
   rescue ActiveRecord::RecordNotFound
     render_404
