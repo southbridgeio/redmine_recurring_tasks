@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -36,7 +36,6 @@ then
 fi
 
 mv $TESTSPACE/database.yml.travis config/database.yml
-mv $TESTSPACE/additional_environment.rb config/
 
 # create a link to the backlogs plugin
 ln -sf $PATH_TO_PLUGIN plugins/$NAME_OF_PLUGIN
