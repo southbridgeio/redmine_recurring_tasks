@@ -1,5 +1,5 @@
 # View hook
-require_dependency 'weekly_scheduler_sidebar_hook'
+require_dependency 'redmine_recurring_tasks/hooks/issue_sidebar_hook'
 
 Redmine::Plugin.register :redmine_recurring_tasks do
   name 'Redmine Recurring Tasks'
