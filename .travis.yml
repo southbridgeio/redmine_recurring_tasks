@@ -20,7 +20,7 @@ before_script:
 
 script:
   - export TESTSPACE=`pwd`/testspace
-  - export NAME_OF_PLUGIN=weekly_scheduler
+  - export NAME_OF_PLUGIN=redmine_recurring_tasks
   - export PATH_TO_PLUGIN=`pwd`
   - export PATH_TO_REDMINE=$TESTSPACE/redmine
   - mkdir $TESTSPACE
