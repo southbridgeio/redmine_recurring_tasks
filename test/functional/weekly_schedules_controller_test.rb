@@ -14,7 +14,7 @@ class WeeklySchedulesControllerTest < ActionController::TestCase
   def setup
     Role.find(1).add_permission! :manage_schedule
     Role.find(1).add_permission! :view_schedule
-    Project.find(1).enable_module!(:weekly_scheduler)
+    Project.find(1).enable_module!(:redmine_recurring_tasks)
   end
 
   def test_new

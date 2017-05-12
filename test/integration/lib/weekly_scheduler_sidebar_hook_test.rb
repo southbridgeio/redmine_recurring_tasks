@@ -29,7 +29,7 @@ class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
   end
 
   def test_hook_with_content_for_should_not_append_content
-    Project.find(1).disable_module!(:weekly_scheduler)
+    Project.find(1).disable_module!(:redmine_recurring_tasks)
     log_user('jsmith', 'jsmith')
     get '/issues/1'
 
@@ -38,15 +38,15 @@ class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
   end
 
   def test_hook_with_content_for_should_append_content
-    Project.find(1).enable_module!(:weekly_scheduler)
+    Project.find(1).enable_module!(:redmine_recurring_tasks)
     Redmine::Hook.add_listener(WeeklySchedulerSidebarHook)
 
     log_user('jsmith', 'jsmith')
     get '/issues/1'
 
     assert_response :success
-    assert_select '.weekly-scheduler' do
-      assert_select 'h3', text: I18n.t(:project_module_weekly_scheduler)
+    assert_select '.redmine_recurring_tasks' do
+      assert_select 'h3', text: I18n.t(:project_module_redmine_recurring_tasks)
     end
   end
 end

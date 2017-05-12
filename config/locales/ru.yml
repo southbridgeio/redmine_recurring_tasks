@@ -1,6 +1,6 @@
 ru:
-  project_module_weekly_scheduler: Недельный планировщик
-  plugin_description: Недельный планировщик задач
+  project_module_redmine_recurring_tasks: Redmine Recurring Tasks
+  plugin_description: Плагин для создания запланированных задач из шаблона
 
   permission_view_schedule: Просмотр расписания
   permission_manage_schedule: Управление расписанием

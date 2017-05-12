@@ -1,5 +1,5 @@
 <% if controller_name == 'issues' && action_name == 'show' && User.current.allowed_to?(:view_schedule, @project) %>
-<div class="weekly-scheduler">
+<div class="redmine_recurring_tasks">
   <%
     schedule = WeeklySchedule.find_by(issue_id: @issue.id)
   %>
@@ -14,7 +14,7 @@
     </div>
   <% end %>
 
-  <h3><%= l(:project_module_weekly_scheduler) %></h3>
+  <h3><%= l(:project_module_redmine_recurring_tasks) %></h3>
 
   <% if schedule.present? %>
     <ul>

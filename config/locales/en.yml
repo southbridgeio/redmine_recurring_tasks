@@ -1,7 +1,7 @@
 # English strings go here for Rails i18n
 en:
-  project_module_weekly_scheduler: Weekly scheduler
-  plugin_description: Weekly scheduler
+  project_module_redmine_recurring_tasks: Redmine Recurring Tasks
+  plugin_description: Plugin for creating scheduled tasks from template.
 
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule
