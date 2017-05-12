@@ -13,6 +13,7 @@ class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
 
   def setup
     Redmine::Hook.clear_listeners
+    Project.find(1).enable_module!(:weekly_scheduler)
   end
 
   def teardown
