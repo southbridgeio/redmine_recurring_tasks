@@ -39,7 +39,7 @@ class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
 
   def test_hook_with_content_for_should_append_content
     Project.find(1).enable_module!(:redmine_recurring_tasks)
-    Redmine::Hook.add_listener(RedmineRecurringTasks::IssueSidebarHook)
+    Redmine::Hook.add_listener(RedmineRecurringTasks::Hooks::IssueSidebarHook)
 
     log_user('jsmith', 'jsmith')
     get '/issues/1'
