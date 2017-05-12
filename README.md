@@ -1,6 +1,7 @@
 # weekly_scheduler
 
 [![Code Climate](https://codeclimate.com/github/constXife/weekly_scheduler/badges/gpa.svg)](https://codeclimate.com/github/constXife/weekly_scheduler)
+[![Build Status](https://travis-ci.org/constXife/weekly_scheduler.svg?branch=master)](https://travis-ci.org/constXife/weekly_scheduler)
 
 Plugin is designed to make periodically issues copies for dealing with repetitive tasks
 
