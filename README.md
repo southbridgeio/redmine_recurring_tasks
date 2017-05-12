@@ -1,9 +1,8 @@
-# weekly_scheduler
+# Redmine Recurring Tasks
 
-[![Code Climate](https://codeclimate.com/github/constXife/weekly_scheduler/badges/gpa.svg)](https://codeclimate.com/github/constXife/weekly_scheduler)
-[![Build Status](https://travis-ci.org/constXife/weekly_scheduler.svg?branch=master)](https://travis-ci.org/constXife/weekly_scheduler)
+[![Build Status](https://travis-ci.org/centosadmin/weekly_scheduler.svg?branch=master)](https://travis-ci.org/centosadmin/weekly_scheduler)
 
-Plugin is designed to make periodically issues copies for dealing with repetitive tasks
+Plugin for creating scheduled tasks from templates.
 
 # Installation
 
@@ -13,7 +12,7 @@ Plugin is designed to make periodically issues copies for dealing with repetitiv
 
 ```
 cd {REDMINE_ROOT}
-git clone https://github.com/constXife/weekly_scheduler.git plugins/weekly_scheduler
+git clone https://github.com/centosadmin/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
@@ -24,7 +23,7 @@ To run copying issues task you should run rake task
 
 ```
 cd {REDMINE_ROOT}
-bundle exec rake weekly_scheduler:exec
+bundle exec rake redmine_recurring_tasks:exec
 ```
 
 And to do it periodically you may use cron or another external scheduler.
@@ -35,4 +34,4 @@ To get all parent issues I'd recommend make new tracker called "Templates", then
 
 # License
 
-[MIT](https://github.com/constxife/weekly_scheduler/blob/master/LICENSE)
+[MIT](https://github.com/centosadmin/redmine_recurring_tasks/blob/master/LICENSE)
