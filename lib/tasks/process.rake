@@ -1,4 +1,4 @@
-namespace :weekly_scheduler do
+namespace :redmine_recurring_tasks do
   desc 'Run issues check'
   task exec: :environment do
     date = Time.now
