@@ -7,9 +7,9 @@ Plugin is designed to make periodically issues copies for dealing with repetitiv
 
 # Installation
 
-* Ruby 2.3+
+* Ruby 2.2+
 * Redmine 3.3+
-* Standart install plugin:
+* Standard install plugin:
 
 ```
 cd {REDMINE_ROOT}
