@@ -1,6 +1,6 @@
 # Redmine Recurring Tasks
 
-[![Build Status](https://travis-ci.org/centosadmin/weekly_scheduler.svg?branch=master)](https://travis-ci.org/centosadmin/weekly_scheduler)
+[![Build Status](https://travis-ci.org/centosadmin/redmine_recurring_tasks.svg?branch=master)](https://travis-ci.org/centosadmin/redmine_recurring_tasks)
 
 Plugin for creating scheduled tasks from templates.
 
