@@ -8,7 +8,28 @@ class WeeklySchedule < ActiveRecord::Base
 
   DAYS = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
 
+  # @return [Array<String>] array of days when schedule should be executed
   def days
     DAYS.select{|d| public_send(d)}
+  end
+
+  # @return [Issue] copied issue
+  def copy_issue
+    new_issue = Issue.new
+    new_issue.init_journal(issue.author)
+    unless issue.author.allowed_to?(:copy_issues, issue.project)
+      fail "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
+    end
+    new_issue.copy_from(issue, attachments: true, subtasks: true, link: false)
+    new_issue.parent_issue_id = issue.parent_id
+    new_issue.tracker_id = self.tracker_id
+    new_issue.save
+    new_issue
+  end
+
+  # @return [Boolean] boolean result of copy issue and save of schedule last try timestamp
+  def execute
+    self.last_try_at = Time.now
+    copy_issue && save
   end
 end
