@@ -14,27 +14,40 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
 
   def test_full_days
     weekly_schedule = WeeklySchedule.new
-    assert weekly_schedule.days, WeeklySchedule::DAYS
+    WeeklySchedule::DAYS.each{|d| weekly_schedule.public_send("#{d}=", true)}
+    assert weekly_schedule.days == WeeklySchedule::DAYS
   end
 
   def test_partial_days
     weekly_schedule = WeeklySchedule.new
     weekly_schedule.monday = true
-    assert weekly_schedule.days, WeeklySchedule::DAYS.dup.delete('monday')
+    assert weekly_schedule.days == ['monday']
   end
 
-  def test_copy_issue
-    issue = Issue.first
-    weekly_schedule = WeeklySchedule.create(issue: issue, tracker_id: issue.tracker_id)
-    copied_issue = weekly_schedule.copy_issue
-    assert true, issue.id != copied_issue.id
-    assert true, issue.subject == copied_issue.subject
+  def test_copy_has_new_issue
+    assert default_issue.id != default_schedule.copy_issue.id
+  end
+
+  def test_copy_has_same_subject
+    assert default_issue.subject == default_schedule.copy_issue.subject
+  end
+
+  def test_copy_has_same_author
+    assert default_issue.author_id == default_schedule.copy_issue.author_id
   end
 
   def test_execute
-    issue = Issue.first
-    weekly_schedule = WeeklySchedule.create(issue: issue, tracker_id: issue.tracker_id)
-    weekly_schedule.execute
-    assert true, weekly_schedule.last_try_at.present?
+    default_schedule.execute
+    assert default_schedule.last_try_at.present?
+  end
+
+  private
+
+  def default_issue
+    Issue.first
+  end
+
+  def default_schedule
+    @default_schedule ||= WeeklySchedule.create(issue: default_issue, tracker_id: default_issue.tracker_id)
   end
 end

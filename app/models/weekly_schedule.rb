@@ -23,6 +23,7 @@ class WeeklySchedule < ActiveRecord::Base
     new_issue.copy_from(issue, attachments: true, subtasks: true, link: false)
     new_issue.parent_issue_id = issue.parent_id
     new_issue.tracker_id = self.tracker_id
+    new_issue.author_id = issue.author_id
     new_issue.save
     new_issue
   end

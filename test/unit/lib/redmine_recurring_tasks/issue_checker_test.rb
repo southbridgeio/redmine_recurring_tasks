@@ -7,11 +7,11 @@ module RedmineRecurringTasks
 
       schedule_hash = {
         issue_id: 1,
-        tracker_id: 1,
+        tracker_id: 1
       }
       schedule_hash[week_day.to_sym] = true
       schedule = WeeklySchedule.create!(schedule_hash)
-      assert [schedule], IssueChecker.schedules
+      assert [schedule] == IssueChecker.schedules
     end
 
     def test_schedules_return_nothing
@@ -20,7 +20,7 @@ module RedmineRecurringTasks
         tracker_id: 1
       }
       WeeklySchedule.create!(schedule_hash)
-      assert [], IssueChecker.schedules
+      assert [] == IssueChecker.schedules
     end
   end
 end
