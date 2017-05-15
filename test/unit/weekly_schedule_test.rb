@@ -36,6 +36,17 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert_equal ['cannot be blank'], weekly_schedule.errors.messages[:tracker_id]
   end
 
+  def test_copy_has_start_date
+    assert default_issue.start_date != default_schedule.copy_issue.start_date
+    assert default_schedule.copy_issue.start_date.present?
+    assert default_schedule.copy_issue.start_date.today?
+  end
+
+  def test_copy_has_due_date
+    assert default_issue.due_date != default_schedule.copy_issue.due_date
+    assert default_schedule.copy_issue.due_date.present?
+  end
+
   def test_copy_has_new_issue
     assert default_issue.id != default_schedule.copy_issue.id
   end

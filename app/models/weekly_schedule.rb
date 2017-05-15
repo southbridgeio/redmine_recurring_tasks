@@ -26,6 +26,12 @@ class WeeklySchedule < ActiveRecord::Base
     new_issue.tracker_id = self.tracker_id
     new_issue.author_id = issue.author_id
     new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
+    if issue.due_date.present?
+      new_issue.start_date = Time.now
+
+      issue_date = issue.start_date || issue.created_at
+      new_issue.due_date = new_issue.start_date + (issue.due_date - issue_date)
+    end
     new_issue.save!
     new_issue
   end
