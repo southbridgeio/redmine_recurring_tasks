@@ -1,3 +1,5 @@
+require 'redmine_recurring_tasks'
+
 ActionDispatch::Callbacks.to_prepare do
   paths = '/lib/redmine_recurring_tasks/{patches/*_patch,hooks/*_hook}.rb'
   Dir.glob(File.dirname(__FILE__) + paths).each do |file|
@@ -14,6 +16,13 @@ Redmine::Plugin.register :redmine_recurring_tasks do
   author_url 'https://github.com/centosadmin'
 
   requires_redmine version_or_higher: '3.3'
+
+  settings(
+    default: {
+      'associations' => RedmineRecurringTasks.issue_associations
+    },
+    partial: 'settings/redmine_recurring_tasks'
+  )
 
   project_module :redmine_recurring_tasks do
     permission :view_schedule,   weekly_schedules: :show, read: true

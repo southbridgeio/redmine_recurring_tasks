@@ -5,6 +5,8 @@ ru:
   permission_view_schedule: Просмотр расписания
   permission_manage_schedule: Управление расписанием
 
+  settings_associations: Связи Задачи для копирования
+
   activerecord:
     attributes:
       weekly_schedule:

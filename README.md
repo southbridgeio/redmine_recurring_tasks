@@ -28,9 +28,11 @@ bundle exec rake redmine_recurring_tasks:exec
 
 And to do it periodically you may use cron or another external scheduler.
 
-# Recommendation
+# Settings
 
-To get all parent issues I'd recommend make new tracker called "Templates", then when you creating new schedule for issue — select specific tracker in the form.
+If you have any plugins, which for some reason doesn't copying in spawned issues, you can set specific issue associations fields in plugin settings. But be careful — this option can break work plugin scheduler.
+
+For example, if you using plugin *Redmine checklists*, you can check "checklists" in RedmineRecurringTasks settings. 
 
 # License
 

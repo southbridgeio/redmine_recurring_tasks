@@ -40,6 +40,13 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert default_issue.id != default_schedule.copy_issue.id
   end
 
+  def test_copy_has_association
+    default_issue.create_weekly_schedule
+    copied_issue = default_schedule.copy_issue(:weekly_schedule)
+    assert copied_issue.weekly_schedule.present?
+    assert default_issue.weekly_schedule.id != copied_issue.weekly_schedule.id
+  end
+
   def test_copy_has_same_subject
     assert default_issue.subject == default_schedule.copy_issue.subject
   end

@@ -15,8 +15,8 @@ class WeeklySchedule < ActiveRecord::Base
   end
 
   # @return [Issue] copied issue
-  def copy_issue
-    new_issue = Issue.new
+  def copy_issue(associations = nil)
+    new_issue = issue.deep_clone include: associations
     new_issue.init_journal(issue.author)
     unless issue.author.allowed_to?(:copy_issues, issue.project)
       fail "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
@@ -25,13 +25,13 @@ class WeeklySchedule < ActiveRecord::Base
     new_issue.parent_issue_id = issue.parent_id
     new_issue.tracker_id = self.tracker_id
     new_issue.author_id = issue.author_id
-    new_issue.save
+    new_issue.save!
     new_issue
   end
 
   # @return [Boolean] boolean result of copy issue and save of schedule last try timestamp
-  def execute
+  def execute(associations = nil)
     self.last_try_at = Time.now
-    copy_issue && save
+    copy_issue(associations) && save
   end
 end

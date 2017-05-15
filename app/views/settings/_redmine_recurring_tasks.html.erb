@@ -1,0 +1,12 @@
+<%
+  @settings = ActionController::Parameters.new(@settings)
+%>
+<p>
+  <%= label_tag 'settings[associations]', l(:settings_associations) %>
+  <%= select_tag 'settings[associations]',
+                 options_for_select(RedmineRecurringTasks.issue_associations, @settings[:associations]),
+                 {multiple: true, size: 20, style: 'width: 50%;'} %>
+</p>
+<p>
+  <%= button_tag l(:button_reset), type: :button, onClick: '$("#settings_associations option:selected").prop("selected", false);' %>
+</p>
