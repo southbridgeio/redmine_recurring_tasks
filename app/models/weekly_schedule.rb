@@ -25,6 +25,7 @@ class WeeklySchedule < ActiveRecord::Base
     new_issue.parent_issue_id = issue.parent_id
     new_issue.tracker_id = self.tracker_id
     new_issue.author_id = issue.author_id
+    new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
     new_issue.save!
     new_issue
   end

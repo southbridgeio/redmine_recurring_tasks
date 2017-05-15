@@ -47,6 +47,22 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert default_issue.weekly_schedule.id != copied_issue.weekly_schedule.id
   end
 
+  def test_copy_status_if_new
+    issue = Issue.find(1)
+    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    copied_issue = schedule.copy_issue
+    assert_equal issue.status_id, 1
+    assert_equal copied_issue.status_id, 1
+  end
+
+  def test_copy_status_if_not_new
+    issue = Issue.find(8)
+    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    copied_issue = schedule.copy_issue
+    assert_equal issue.status_id, 5
+    assert_equal copied_issue.status_id, 1
+  end
+
   def test_copy_has_same_subject
     assert default_issue.subject == default_schedule.copy_issue.subject
   end
