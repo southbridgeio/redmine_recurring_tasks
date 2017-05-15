@@ -14,6 +14,20 @@ module RedmineRecurringTasks
       assert [schedule] == IssueChecker.schedules
     end
 
+    def test_schedules_return_nothing_when_issue_deleted
+      new_issue = Issue.new
+      new_issue.copy_from(default_issue, attachments: true, subtasks: true, link: false)
+      new_issue.save!
+
+      weekly_schedule = WeeklySchedule.new(issue: new_issue, tracker_id: new_issue.tracker_id)
+      WeeklySchedule::DAYS.each{|d| weekly_schedule.public_send("#{d}=", true)}
+      weekly_schedule.save!
+
+      new_issue.destroy!
+
+      assert_equal [], IssueChecker.schedules
+    end
+
     def test_schedules_return_nothing
       schedule_hash = {
         issue_id: 1,
@@ -21,6 +35,12 @@ module RedmineRecurringTasks
       }
       WeeklySchedule.create!(schedule_hash)
       assert [] == IssueChecker.schedules
+    end
+
+    private
+
+    def default_issue
+      Issue.first
     end
   end
 end
