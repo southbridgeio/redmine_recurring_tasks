@@ -39,7 +39,6 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
   def test_copy_has_start_date
     assert default_issue.start_date != default_schedule.copy_issue.start_date
     assert default_schedule.copy_issue.start_date.present?
-    assert default_schedule.copy_issue.start_date.today?
   end
 
   def test_copy_has_due_date

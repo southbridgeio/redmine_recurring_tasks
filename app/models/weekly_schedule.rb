@@ -26,8 +26,10 @@ class WeeklySchedule < ActiveRecord::Base
     new_issue.tracker_id = self.tracker_id
     new_issue.author_id = issue.author_id
     new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
-    issue.watcher_users.each do |user|
-      new_issue.add_watcher(user)
+    if issue.watcher_users.size > 0 && new_issue.watchers.size != issue.watchers.size
+      issue.watcher_users.each do |user|
+        new_issue.add_watcher(user)
+      end
     end
     if issue.due_date.present?
       new_issue.start_date = Time.now
