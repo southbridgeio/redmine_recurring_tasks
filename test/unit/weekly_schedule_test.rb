@@ -24,6 +24,18 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert weekly_schedule.days == ['monday']
   end
 
+  def test_issue_id_presence
+    weekly_schedule = WeeklySchedule.new
+    assert weekly_schedule.invalid?
+    assert_equal ['cannot be blank'], weekly_schedule.errors.messages[:issue_id]
+  end
+
+  def test_tracker_id_presence
+    weekly_schedule = WeeklySchedule.new
+    assert weekly_schedule.invalid?
+    assert_equal ['cannot be blank'], weekly_schedule.errors.messages[:tracker_id]
+  end
+
   def test_copy_has_new_issue
     assert default_issue.id != default_schedule.copy_issue.id
   end

@@ -4,7 +4,8 @@ class WeeklySchedule < ActiveRecord::Base
   belongs_to :issue
   belongs_to :tracker
 
-  validates :issue_id, uniqueness: true
+  validates :issue_id, presence: true, uniqueness: true
+  validates :tracker_id, presence: true
 
   DAYS = %w(monday tuesday wednesday thursday friday saturday sunday).freeze
 
