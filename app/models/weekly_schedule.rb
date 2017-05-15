@@ -29,7 +29,7 @@ class WeeklySchedule < ActiveRecord::Base
     if issue.due_date.present?
       new_issue.start_date = Time.now
 
-      issue_date = issue.start_date || issue.created_at
+      issue_date = (issue.start_date || issue.created_on).to_date
       new_issue.due_date = new_issue.start_date + (issue.due_date - issue_date)
     end
     new_issue.save!
