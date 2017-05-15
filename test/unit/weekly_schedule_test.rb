@@ -47,6 +47,19 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert default_schedule.copy_issue.due_date.present?
   end
 
+  def test_copy_has_observer
+    issue = Issue.find(1).deep_dup
+    issue.add_watcher(User.find(1))
+    issue.save!
+
+    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    copied_issue = schedule.copy_issue
+
+    assert_equal issue.watchers.first.user, User.find(1)
+    assert_equal copied_issue.watchers.size, issue.watchers.size
+    assert_equal copied_issue.watchers.first.user, issue.watchers.first.user
+  end
+
   def test_copy_has_new_issue
     assert default_issue.id != default_schedule.copy_issue.id
   end
