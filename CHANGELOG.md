@@ -1,3 +1,8 @@
+# 0.0.3
+
+* Add whenever gem support
+* Fix schedule checking method
+
 # 0.0.2
 
 * **(breaking-change)** Rename plugin to RedmineRecurringTasks
@@ -9,4 +14,5 @@
 * Add watchers to copied issue
 
 # 0.0.1
+
 * Add ability to make issues copies

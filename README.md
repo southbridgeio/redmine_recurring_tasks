@@ -28,6 +28,28 @@ bundle exec rake redmine_recurring_tasks:exec
 
 And to do it periodically you may use cron or another external scheduler.
 
+## Schedulers
+
+### Whenever
+
+```
+cd {REDMINE_ROOT}
+SCHEDULER=whenever bundle install
+whenever --update-crontab --load-file plugins/redmine_recurring_tasks/config/schedule.rb
+```
+
+### Cron manual
+
+```
+$ crontab -e
+```
+
+And add cron job line
+
+```
+*/5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec
+```
+
 # Settings
 
 If you have any plugins, which for some reason doesn't copying in spawned issues, you can set specific issue associations fields in plugin settings. But be careful — this option can break work plugin scheduler.
