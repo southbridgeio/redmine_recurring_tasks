@@ -37,3 +37,7 @@ For example, if you using plugin *Redmine checklists*, you can check "checklists
 # License
 
 [MIT](https://github.com/centosadmin/redmine_recurring_tasks/blob/master/LICENSE)
+
+# Author of the Plugin
+
+The plugin is designed by [Southbridge](https://southbridge.io).
