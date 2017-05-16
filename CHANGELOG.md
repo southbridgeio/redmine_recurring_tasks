@@ -1,7 +1,7 @@
-# 0.0.2 (In progress)
+# 0.0.2
 
 * **(breaking-change)** Rename plugin to RedmineRecurringTasks
-* **(breaking-change)** Transfer plugin to southbridge (http://github.com/centosadmin)
+* **(breaking-change)** Transfer plugin to Southbridge (http://github.com/centosadmin)
 * Make preserve author of issue on copy
 * Add relation between Issue and WeeklySchedule 
 * Add issue associations to copy in settings
