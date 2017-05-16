@@ -9,8 +9,8 @@ end
 
 Redmine::Plugin.register :redmine_recurring_tasks do
   name 'Redmine Recurring Tasks'
-  author 'southbridge'
-  description 'Plugin for creating scheduled tasks from template.'
+  author 'Southbridge'
+  description 'Plugin for creating scheduled tasks from template'
   version '0.0.2'
   url 'https://github.com/centosadmin/redmine_recurring_tasks'
   author_url 'https://github.com/centosadmin'
