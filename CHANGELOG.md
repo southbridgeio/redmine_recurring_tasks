@@ -1,4 +1,4 @@
-# 0.0.2 (In progress)
+# 0.0.2
 
 * **(breaking-change)** Rename plugin to RedmineRecurringTasks
 * **(breaking-change)** Transfer plugin to Southbridge (http://github.com/centosadmin)
