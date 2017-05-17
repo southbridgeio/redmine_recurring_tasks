@@ -30,11 +30,34 @@ And to do it periodically you may use cron or another external scheduler.
 
 ## Schedulers
 
+### Sidekiq-cron
+
+
+```
+class WeeklyScheduleWorker
+  include Sidekiq::Worker
+
+  def perform
+    checker = RedmineRecurringTasks::IssueChecker.new(Setting.plugin_redmine_recurring_tasks)
+    checker.call
+  end
+end
+
+cron_job_array = [
+  {
+    'name'  => 'Weekly schedule worker,
+    'class' => 'WeeklyScheduleWorker',
+    'cron'  => '*/5 * * * *'
+  }
+]
+
+Sidekiq::Cron::Job.load_from_array cron_job_array
+```
+
 ### Whenever
 
 ```
 cd {REDMINE_ROOT}
-SCHEDULER=whenever bundle install
 whenever --update-crontab --load-file plugins/redmine_recurring_tasks/config/schedule.rb
 ```
 
