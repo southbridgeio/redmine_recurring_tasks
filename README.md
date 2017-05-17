@@ -45,7 +45,7 @@ end
 
 cron_job_array = [
   {
-    'name'  => 'Weekly schedule worker,
+    'name'  => 'Weekly schedule worker',
     'class' => 'WeeklyScheduleWorker',
     'cron'  => '*/5 * * * *'
   }
