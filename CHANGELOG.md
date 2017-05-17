@@ -1,6 +1,5 @@
-# 0.0.3
+# 0.0.3 (In progress)
 
-* Add whenever gem support
 * Fix schedule checking method
 
 # 0.0.2
