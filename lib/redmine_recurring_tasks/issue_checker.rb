@@ -17,10 +17,10 @@ module RedmineRecurringTasks
       WeeklySchedule.where("#{week_day} = true").map do |schedule|
         time_came = schedule.time.strftime('%H%M%S') <= date.strftime('%H%M%S')
 
-        if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.strftime('%Y%m%d') <= date.strftime('%Y%m%d'))
+        if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.strftime('%Y%m%d') < date.strftime('%Y%m%d'))
           schedule
         end
-      end
+      end.compact
     end
 
     # @return [void]
