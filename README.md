@@ -32,8 +32,15 @@ And to do it periodically you may use cron or another external scheduler.
 
 ### Sidekiq-cron
 
+To run sidekiq-cron tasks you should:
+
+- Install redis (*yum install redis*)
+- Install plugin [redmine_sidekiq](https://github.com/ogom/redmine_sidekiq)
+- Then you can add initialization file. For example
 
 ```
+# /opt/redmine/config/initializers/zz-cron.rb
+
 class WeeklyScheduleWorker
   include Sidekiq::Worker
 
