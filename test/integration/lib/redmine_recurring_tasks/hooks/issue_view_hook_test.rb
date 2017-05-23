@@ -1,6 +1,6 @@
 require File.expand_path('../../../../../test_helper', __FILE__)
 
-class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
+class WeeklySchedulerViewHookTest < Redmine::IntegrationTest
   fixtures :projects,
            :users, :email_addresses,
            :roles,
@@ -39,14 +39,14 @@ class WeeklySchedulerSidebarHookTest < Redmine::IntegrationTest
 
   def test_hook_with_content_for_should_append_content
     Project.find(1).enable_module!(:redmine_recurring_tasks)
-    Redmine::Hook.add_listener(RedmineRecurringTasks::Hooks::IssueSidebarHook)
+    Redmine::Hook.add_listener(RedmineRecurringTasks::Hooks::IssueViewHook)
 
     log_user('jsmith', 'jsmith')
     get '/issues/1'
 
     assert_response :success
     assert_select '.redmine_recurring_tasks' do
-      assert_select 'h3', text: I18n.t(:project_module_redmine_recurring_tasks)
+      assert_select 'strong', text: I18n.t(:schedule)
     end
   end
 end

@@ -1,5 +1,6 @@
 ru:
   project_module_redmine_recurring_tasks: Redmine Recurring Tasks
+  schedule: Расписание
   plugin_description: Плагин для создания запланированных задач из шаблона
 
   permission_view_schedule: Просмотр расписания
