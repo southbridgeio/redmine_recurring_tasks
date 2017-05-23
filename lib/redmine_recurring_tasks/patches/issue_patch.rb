@@ -12,7 +12,9 @@ module RedmineRecurringTasks
           def weekly_schedule_root
             return weekly_schedule if weekly_schedule.present?
 
-            WeeklySchedule.joins(:issue).find_by(issues: {subject: subject, project_id: project_id})
+            WeeklySchedule.joins(:issue).find_by(issues: {subject:    subject,
+                                                          project_id: project_id,
+                                                          author_id:  author_id})
           end
         end
       end

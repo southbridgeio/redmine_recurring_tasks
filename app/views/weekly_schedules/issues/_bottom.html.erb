@@ -15,13 +15,7 @@
 
   <p><strong><%= l(:schedule) %></strong></p>
 
-  <% if @issue.weekly_schedule_root.present? %>
-    <% if @issue.weekly_schedule_root.issue != @issue %>
-      <div>
-        <%= link_to_issue(@issue.weekly_schedule_root.issue, :project => (@issue.weekly_schedule_root.issue.project_id != @issue.project_id)) %>
-      </div>
-    <% end %>
-
+  <% if @issue.weekly_schedule.present? %>
     <ul>
       <% @issue.weekly_schedule_root.days.each do |field| %>
       <li>
@@ -29,6 +23,14 @@
       </li>
       <% end %>
     </ul>
+  <% elsif @issue.weekly_schedule_root.present? %>
+    <% if @issue.weekly_schedule_root.issue != @issue %>
+      <% schedule_root_issue = @issue.weekly_schedule_root.issue %>
+      <div>
+        <%= l(:template) %>:
+        <%= link_to("#{schedule_root_issue.subject.truncate(60)} ##{schedule_root_issue.id}", issue_path(@issue.weekly_schedule_root.issue)) %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 <% end %>
