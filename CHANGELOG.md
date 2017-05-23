@@ -1,6 +1,7 @@
 # 0.0.3 (In progress)
 
 * Fix schedule checking method
+* Move schedule to issue details bottom
 
 # 0.0.2
 
