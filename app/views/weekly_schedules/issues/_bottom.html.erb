@@ -1,0 +1,36 @@
+<% if controller_name == 'issues' && action_name == 'show' && User.current.allowed_to?(:view_schedule, @project) %>
+
+<hr />
+
+<div class="redmine_recurring_tasks">
+  <% if User.current.allowed_to?(:manage_schedule, @project) && (@issue.weekly_schedule_root.nil? || @issue.weekly_schedule_root.issue == @issue) %>
+    <div class="contextual">
+      <% if @issue.weekly_schedule.present? %>
+        <a href="<%= edit_weekly_schedule_path(@issue.weekly_schedule_root.id) %>"><%= l(:button_change) %></a>
+      <% else %>
+        <a href="<%= new_weekly_schedule_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p><strong><%= l(:schedule) %></strong></p>
+
+  <% if @issue.weekly_schedule.present? %>
+    <ul>
+      <% @issue.weekly_schedule_root.days.each do |field| %>
+      <li>
+        <%= WeeklySchedule.human_attribute_name(field) %>, <%= @issue.weekly_schedule_root.time.to_s(:time) %>
+      </li>
+      <% end %>
+    </ul>
+  <% elsif @issue.weekly_schedule_root.present? %>
+    <% if @issue.weekly_schedule_root.issue != @issue %>
+      <% schedule_root_issue = @issue.weekly_schedule_root.issue %>
+      <div>
+        <%= l(:template) %>:
+        <%= link_to("#{schedule_root_issue.subject.truncate(60)} ##{schedule_root_issue.id}", issue_path(@issue.weekly_schedule_root.issue)) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

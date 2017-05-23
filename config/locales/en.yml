@@ -2,6 +2,8 @@
 en:
   project_module_redmine_recurring_tasks: Redmine Recurring Tasks
   plugin_description: Plugin for creating scheduled tasks from template.
+  schedule: Schedule
+  template: Template
 
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule

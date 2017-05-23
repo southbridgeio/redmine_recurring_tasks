@@ -7,6 +7,15 @@ module RedmineRecurringTasks
           unloadable
 
           has_one :weekly_schedule, dependent: :destroy
+
+          # Return parent issue of children
+          def weekly_schedule_root
+            return weekly_schedule if weekly_schedule.present?
+
+            WeeklySchedule.joins(:issue).find_by(issues: {subject:    subject,
+                                                          project_id: project_id,
+                                                          author_id:  author_id})
+          end
         end
       end
     end
