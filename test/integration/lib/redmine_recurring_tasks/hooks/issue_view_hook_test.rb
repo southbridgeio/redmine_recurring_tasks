@@ -30,23 +30,9 @@ class WeeklySchedulerViewHookTest < Redmine::IntegrationTest
 
   def test_hook_with_content_for_should_not_append_content
     Project.find(1).disable_module!(:redmine_recurring_tasks)
-    log_user('jsmith', 'jsmith')
     get '/issues/1'
 
     assert_response :success
     assert_select '.weekly-scheduler', false
-  end
-
-  def test_hook_with_content_for_should_append_content
-    Project.find(1).enable_module!(:redmine_recurring_tasks)
-    Redmine::Hook.add_listener(RedmineRecurringTasks::Hooks::IssueViewHook)
-
-    log_user('jsmith', 'jsmith')
-    get '/issues/1'
-
-    assert_response :success
-    assert_select '.redmine_recurring_tasks' do
-      assert_select 'strong', text: I18n.t(:schedule)
-    end
   end
 end
