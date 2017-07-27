@@ -41,7 +41,7 @@ To run sidekiq-cron tasks you should:
 ```
 # /opt/redmine/config/initializers/zz-cron.rb
 
-class WeeklyScheduleWorker
+class RecurringTaskWorker
   include Sidekiq::Worker
 
   def perform
@@ -53,7 +53,7 @@ end
 cron_job_array = [
   {
     'name'  => 'Weekly schedule worker',
-    'class' => 'WeeklyScheduleWorker',
+    'class' => 'RecurringTaskWorker',
     'cron'  => '*/5 * * * *'
   }
 ]

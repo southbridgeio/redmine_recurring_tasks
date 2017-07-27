@@ -1,6 +1,6 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class WeeklyScheduleTest < ActiveSupport::TestCase
+class RecurringTaskTest < ActiveSupport::TestCase
   fixtures :projects, :users, :email_addresses, :user_preferences, :members, :member_roles, :roles,
            :groups_users,
            :trackers, :projects_trackers,
@@ -13,27 +13,27 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
            :time_entries
 
   def test_full_days
-    weekly_schedule = WeeklySchedule.new
-    WeeklySchedule::DAYS.each{|d| weekly_schedule.public_send("#{d}=", true)}
-    assert weekly_schedule.days == WeeklySchedule::DAYS
+    recurring_task = RecurringTask.new
+    RecurringTask::DAYS.each{|d| recurring_task.public_send("#{d}=", true)}
+    assert recurring_task.days == RecurringTask::DAYS
   end
 
   def test_partial_days
-    weekly_schedule = WeeklySchedule.new
-    weekly_schedule.monday = true
-    assert weekly_schedule.days == ['monday']
+    recurring_task = RecurringTask.new
+    recurring_task.monday = true
+    assert recurring_task.days == ['monday']
   end
 
   def test_issue_id_presence
-    weekly_schedule = WeeklySchedule.new
-    assert weekly_schedule.invalid?
-    assert_equal ['cannot be blank'], weekly_schedule.errors.messages[:issue_id]
+    recurring_task = RecurringTask.new
+    assert recurring_task.invalid?
+    assert_equal ['cannot be blank'], recurring_task.errors.messages[:issue_id]
   end
 
   def test_tracker_id_presence
-    weekly_schedule = WeeklySchedule.new
-    assert weekly_schedule.invalid?
-    assert_equal ['cannot be blank'], weekly_schedule.errors.messages[:tracker_id]
+    recurring_task = RecurringTask.new
+    assert recurring_task.invalid?
+    assert_equal ['cannot be blank'], recurring_task.errors.messages[:tracker_id]
   end
 
   def test_copy_has_start_date
@@ -51,7 +51,7 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     issue.add_watcher(User.find(1))
     issue.save!
 
-    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    schedule = RecurringTask.create!(issue: issue, tracker: issue.tracker)
     copied_issue = schedule.copy_issue
 
     assert_equal issue.watchers.first.user, User.find(1)
@@ -64,15 +64,15 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
   end
 
   def test_copy_has_association
-    default_issue.create_weekly_schedule
-    copied_issue = default_schedule.copy_issue(:weekly_schedule)
-    assert copied_issue.weekly_schedule.present?
-    assert default_issue.weekly_schedule.id != copied_issue.weekly_schedule.id
+    default_issue.create_recurring_task
+    copied_issue = default_schedule.copy_issue(:recurring_task)
+    assert copied_issue.recurring_task.present?
+    assert default_issue.recurring_task.id != copied_issue.recurring_task.id
   end
 
   def test_copy_status_if_new
     issue = Issue.find(1)
-    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    schedule = RecurringTask.create!(issue: issue, tracker: issue.tracker)
     copied_issue = schedule.copy_issue
     assert_equal issue.status_id, 1
     assert_equal copied_issue.status_id, 1
@@ -80,7 +80,7 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
 
   def test_copy_status_if_not_new
     issue = Issue.find(8)
-    schedule = WeeklySchedule.create!(issue: issue, tracker: issue.tracker)
+    schedule = RecurringTask.create!(issue: issue, tracker: issue.tracker)
     copied_issue = schedule.copy_issue
     assert_equal issue.status_id, 5
     assert_equal copied_issue.status_id, 1
@@ -99,6 +99,39 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
     assert default_schedule.last_try_at.present?
   end
 
+  def test_month_days
+    days = %w(1 2 3)
+    default_schedule.month_days = days
+    assert default_schedule.save
+    assert default_schedule.month_days == days
+  end
+
+  def test_run_type_m
+    default_schedule.month_days = %w(1 2 3)
+    assert default_schedule.save
+    assert default_schedule.run_type == RecurringTask::RUN_TYPE_M_DAYS
+  end
+
+  def test_run_type_w
+    default_schedule.month_days = []
+    assert default_schedule.save
+    assert default_schedule.run_type == RecurringTask::RUN_TYPE_W_DAYS
+  end
+
+  def test_months
+    days = %w(1 2 3)
+    default_schedule.month_days = days
+    assert default_schedule.save
+    assert default_schedule.month_days == days
+  end
+
+  def test_last_day
+    days = %w(last_day)
+    default_schedule.month_days = days
+    assert default_schedule.save
+    assert default_schedule.month_days == [Time.now.end_of_month.day.to_s]
+  end
+
   private
 
   def default_issue
@@ -106,6 +139,6 @@ class WeeklyScheduleTest < ActiveSupport::TestCase
   end
 
   def default_schedule
-    @default_schedule ||= WeeklySchedule.create(issue: default_issue, tracker_id: default_issue.tracker_id)
+    @default_schedule ||= RecurringTask.create(issue: default_issue, tracker_id: default_issue.tracker_id)
   end
 end

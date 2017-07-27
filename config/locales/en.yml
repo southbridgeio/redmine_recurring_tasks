@@ -5,6 +5,11 @@ en:
   schedule: Schedule
   template: Template
 
+  month: Month
+  week_day: Day of a week
+  month_day: Day of a month
+  last_day: Last day
+
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule
 

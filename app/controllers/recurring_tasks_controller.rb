@@ -1,4 +1,4 @@
-class WeeklySchedulesController < ApplicationController
+class RecurringTasksController < ApplicationController
   unloadable
 
   before_filter :set_schedule, only: [:edit, :destroy, :update]
@@ -6,18 +6,18 @@ class WeeklySchedulesController < ApplicationController
   before_filter :check_permission
 
   def new
-    existing_schedule = WeeklySchedule.find_by(issue: @issue)
+    existing_schedule = RecurringTask.find_by(issue: @issue)
     if existing_schedule
-      return redirect_to edit_weekly_schedule_path(existing_schedule)
+      return redirect_to edit_recurring_task_path(existing_schedule)
     end
 
-    @schedule = WeeklySchedule.new(tracker: @issue.tracker, issue: @issue)
+    @schedule = RecurringTask.new(tracker: @issue.tracker, issue: @issue)
   end
 
   def create
-    @schedule = WeeklySchedule.new
+    @schedule = RecurringTask.new
     @schedule.issue = @issue
-    @schedule.assign_attributes(weekly_schedule_params)
+    @schedule.assign_attributes(recurring_task_params)
     if @schedule.save
       redirect_to issue_path(@issue)
     else
@@ -26,7 +26,7 @@ class WeeklySchedulesController < ApplicationController
   end
 
   def update
-    @schedule.assign_attributes(weekly_schedule_params)
+    @schedule.assign_attributes(recurring_task_params)
     if @schedule.save
       redirect_to issue_path(@issue)
     else
@@ -44,13 +44,14 @@ class WeeklySchedulesController < ApplicationController
 
   private
 
-  def weekly_schedule_params
-    params.require(:weekly_schedule).permit(:sunday, :monday, :tuesday, :wednesday,
-                                            :thursday, :friday, :saturday, :time, :tracker_id)
+  def recurring_task_params
+    params.require(:recurring_task).permit(:sunday, :monday, :tuesday, :wednesday,
+                                           :thursday, :friday, :saturday, :time, :tracker_id, :client_run_type,
+                                           months: [], month_days: [])
   end
 
   def set_schedule
-    @schedule = WeeklySchedule.find(params[:id])
+    @schedule = RecurringTask.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end

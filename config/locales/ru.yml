@@ -4,6 +4,11 @@ ru:
   template: Шаблон
   plugin_description: Плагин для создания запланированных задач из шаблона
 
+  month: Месяц
+  week_day: День недели
+  month_day: День месяца
+  last_day: Последний день
+
   permission_view_schedule: Просмотр расписания
   permission_manage_schedule: Управление расписанием
 
@@ -11,7 +16,7 @@ ru:
 
   activerecord:
     attributes:
-      weekly_schedule:
+      recurring_task:
         sunday: Воскресенье
         monday: Понедельник
         tuesday: Вторник

@@ -1,5 +1,7 @@
-# 0.0.3 (In progress)
+# 0.1.0 (In progress)
 
+* Add ability to choose months and month days
+* Change model from WeeklySchedule to RecurringTask
 * Fix schedule checking method
 * Move schedule to issue details bottom
 

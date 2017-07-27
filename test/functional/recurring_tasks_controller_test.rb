@@ -1,6 +1,6 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class WeeklySchedulesControllerTest < ActionController::TestCase
+class RecurringTasksControllerTest < ActionController::TestCase
   fixtures :projects,
            :users,
            :roles,
@@ -25,7 +25,6 @@ class WeeklySchedulesControllerTest < ActionController::TestCase
 
       assert_response :success
       assert_template 'new'
-      assert_select 'legend', text: 'Cannot print recipes'
     end
   end
 
