@@ -90,7 +90,7 @@
                           <%= i %>
                         </option>
                       <% end %>
-                      <option value="last_day">
+                      <option value="last_day"<%= ' selected' if @schedule.month_days.include?('last_day') %>>
                         <%= l('last_day') %>
                       </option>
                     </select>

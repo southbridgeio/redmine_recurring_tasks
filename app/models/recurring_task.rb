@@ -51,9 +51,12 @@ class RecurringTask < ActiveRecord::Base
   def month_days
     result = super
     result = JSON.parse(result)
-    result.map{|x| x == 'last_day' ? Time.now.end_of_month.day.to_s : x}.compact.uniq
   rescue
     raise result
+  end
+
+  def month_days_parsed
+    month_days.map{|x| x == 'last_day' ? Time.now.end_of_month.day.to_s : x}.compact.uniq
   end
 
   def self.schedules(current_time = Time.now)
@@ -71,7 +74,7 @@ class RecurringTask < ActiveRecord::Base
         next unless schedule.public_send(week_day)
       else
         # month day
-        month_days = schedule.month_days
+        month_days = schedule.month_days_parsed
         next unless month_days.include?(month_day.to_s)
       end
 

@@ -25,7 +25,7 @@
         <% end %>
       </ul>
     <% else %>
-      <%= @issue.recurring_task_root.month_days.join(', ') %> — <%= @issue.recurring_task_root.time.to_s(:time) %>
+      <%= @issue.recurring_task_root.month_days_parsed.join(', ') %> — <%= @issue.recurring_task_root.time.to_s(:time) %>
     <% end %>
   <% elsif @issue.recurring_task_root.present? %>
     <% if @issue.recurring_task_root.issue != @issue %>

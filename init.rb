@@ -1,6 +1,7 @@
 require 'redmine_recurring_tasks'
 
-ActionDispatch::Callbacks.to_prepare do
+reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
+reloader.to_prepare do
   paths = '/lib/redmine_recurring_tasks/{patches/*_patch,hooks/*_hook}.rb'
   Dir.glob(File.dirname(__FILE__) + paths).each do |file|
     require_dependency file

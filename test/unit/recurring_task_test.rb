@@ -125,11 +125,18 @@ class RecurringTaskTest < ActiveSupport::TestCase
     assert default_schedule.month_days == days
   end
 
-  def test_last_day
+  def test_month_days
     days = %w(last_day)
     default_schedule.month_days = days
     assert default_schedule.save
-    assert default_schedule.month_days == [Time.now.end_of_month.day.to_s]
+    assert default_schedule.month_days == days
+  end
+
+  def test_month_days_parsed
+    days = %w(last_day)
+    default_schedule.month_days = days
+    assert default_schedule.save
+    assert default_schedule.month_days_parsed == [Time.now.end_of_month.day.to_s]
   end
 
   private
