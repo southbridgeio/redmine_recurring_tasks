@@ -13,7 +13,6 @@ module RedmineRecurringTasks
     def call
       schedules.each do |schedule|
         begin
-          fail 'test'
           schedule.execute(settings['associations'])
         rescue => e
           logger.error e.to_s
