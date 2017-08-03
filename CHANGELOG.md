@@ -1,5 +1,6 @@
 # 0.1.0 (In progress)
 
+* Add logging errors via logger
 * Add ability to choose months and month days
 * Change model from WeeklySchedule to RecurringTask
 * Fix schedule checking method

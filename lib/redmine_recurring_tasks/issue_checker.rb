@@ -9,22 +9,30 @@ module RedmineRecurringTasks
       @settings = settings
     end
 
+    # @return [void]
+    def call
+      schedules.each do |schedule|
+        begin
+          fail 'test'
+          schedule.execute(settings['associations'])
+        rescue => e
+          logger.error e.to_s
+          logger.error e.backtrace.join("\n")
+          next
+        end
+      end
+    end
+
     # @return [Array<RecurringTask>] a schedules which should be executed
     def schedules
       RecurringTask.schedules
     end
 
-    # @return [void]
-    def call
-      schedules.each do |schedule|
-        begin
-          schedule.execute(settings['associations'])
-        rescue => e
-          puts e.to_s
-          puts e.backtrace.join("\n")
-          next
-        end
-      end
+    private
+
+    # @return [Logger] a log class
+    def logger
+      @logger ||= Logger.new(Rails.root.join('log', 'redmine_recurring_tasks.log'))
     end
   end
 end
