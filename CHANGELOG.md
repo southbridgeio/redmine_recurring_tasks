@@ -1,4 +1,4 @@
-# 0.1.0 (In progress)
+# 0.1.0
 
 * Add logging errors via logger
 * Add ability to choose months and month days
