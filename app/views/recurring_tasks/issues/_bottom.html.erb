@@ -1,0 +1,40 @@
+<% if controller_name == 'issues' && action_name == 'show' && User.current.allowed_to?(:view_schedule, @project) %>
+
+<hr />
+
+<div class="redmine_recurring_tasks">
+  <% if User.current.allowed_to?(:manage_schedule, @project) && (@issue.recurring_task_root.nil? || @issue.recurring_task_root.issue == @issue) %>
+    <div class="contextual">
+      <% if @issue.recurring_task.present? %>
+        <a href="<%= edit_recurring_task_path(@issue.recurring_task_root.id) %>"><%= l(:button_change) %></a>
+      <% else %>
+        <a href="<%= new_recurring_task_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p><strong><%= l(:schedule) %></strong></p>
+
+  <% if @issue.recurring_task.present? %>
+    <% if @issue.recurring_task_root.run_type == RecurringTask::RUN_TYPE_W_DAYS %>
+      <ul>
+        <% @issue.recurring_task_root.days.each do |field| %>
+        <li>
+          <%= RecurringTask.human_attribute_name(field) %>, <%= @issue.recurring_task_root.time.to_s(:time) %>
+        </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <%= @issue.recurring_task_root.month_days_parsed.join(', ') %> — <%= @issue.recurring_task_root.time.to_s(:time) %>
+    <% end %>
+  <% elsif @issue.recurring_task_root.present? %>
+    <% if @issue.recurring_task_root.issue != @issue %>
+      <% schedule_root_issue = @issue.recurring_task_root.issue %>
+      <div>
+        <%= l(:template) %>:
+        <%= link_to("#{schedule_root_issue.subject.truncate(60)} ##{schedule_root_issue.id}", issue_path(@issue.recurring_task_root.issue)) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

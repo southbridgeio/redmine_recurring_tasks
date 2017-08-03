@@ -8,7 +8,7 @@ Plugin for creating scheduled tasks from templates.
 
 * Ruby 2.2+
 * Redmine 3.3+
-* Standard install plugin:
+* Standard plugin installation:
 
 ```
 cd {REDMINE_ROOT}
@@ -17,9 +17,14 @@ bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
 
+# Usage
+
+To use the plugin, you should turn on it in project modules settings. Then you need to go at issue page and you will see
+Schedule section with "Add" link, which leads you to recurring settings.
+
 # Run
 
-To run copying issues task you should run rake task
+To run scheduling task you should run rake task
 
 ```
 cd {REDMINE_ROOT}
@@ -41,7 +46,7 @@ To run sidekiq-cron tasks you should:
 ```
 # /opt/redmine/config/initializers/zz-cron.rb
 
-class WeeklyScheduleWorker
+class RecurringTaskWorker
   include Sidekiq::Worker
 
   def perform
@@ -53,7 +58,7 @@ end
 cron_job_array = [
   {
     'name'  => 'Weekly schedule worker',
-    'class' => 'WeeklyScheduleWorker',
+    'class' => 'RecurringTaskWorker',
     'cron'  => '*/5 * * * *'
   }
 ]
@@ -92,4 +97,4 @@ For example, if you using plugin *Redmine checklists*, you can check "checklists
 
 # Author of the Plugin
 
-The plugin is designed by [Southbridge](https://southbridge.io).
+The plugin is designed by [Southbridge](https://southbridge.io)

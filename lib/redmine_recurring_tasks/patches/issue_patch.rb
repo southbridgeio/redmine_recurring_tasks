@@ -1,18 +1,18 @@
 module RedmineRecurringTasks
   module Patches
-    # Patch to make link to WeeklySchedule
+    # Patch to make link to RecurringTask
     module IssuePatch
       def self.included(base) # :nodoc:
         base.class_eval do
           unloadable
 
-          has_one :weekly_schedule, dependent: :destroy
+          has_one :recurring_task, dependent: :destroy
 
           # Return parent issue of children
-          def weekly_schedule_root
-            return weekly_schedule if weekly_schedule.present?
+          def recurring_task_root
+            return recurring_task if recurring_task
 
-            WeeklySchedule.joins(:issue).find_by(issues: {subject:    subject,
+            RecurringTask.joins(:issue).find_by(issues: {subject:    subject,
                                                           project_id: project_id,
                                                           author_id:  author_id})
           end

@@ -1,0 +1,174 @@
+<%= form_for @schedule, html: {id: 'recurring_task_form'} do |f| %>
+  <div class="box">
+    <fieldset class="box tabular"><legend><%= @schedule.issue.subject %></legend>
+      <input type="hidden" name="issue_id" value="<%= @schedule.issue.id %>">
+
+      <%= error_messages_for 'schedule' %>
+
+      <style>
+        table.weekly-schedule {
+          width: 100%;
+        }
+      </style>
+
+      <script>
+        $(document).ready(function() {
+          processOption();
+        });
+
+        $(document).on('change', 'input[name="recurring_task[client_run_type]"]', function() {
+          processOption();
+        });
+
+        function processOption() {
+          var isMonthDays = $("input[name='recurring_task[client_run_type]']:checked").val().toString() == 'month_days';
+
+          if (isMonthDays) {
+            $('#month_days').prop('disabled', false);
+            $('input[type="checkbox"].week_day').prop('checked', false);
+            $('input[type="checkbox"].week_day').prop('disabled', true);
+          } else {
+            $('#month_days').prop('disabled', true);
+            $('#month_days option').prop('selected', false);
+            $('input[type="checkbox"].week_day').prop('disabled', false);
+          }
+        }
+      </script>
+
+      <table class="weekly-schedule">
+        <tr>
+          <td valign="top" width="20%">
+            <p>
+              <label>
+                <%= RecurringTask.human_attribute_name(:tracker) %>
+                <%= f.collection_select(:tracker_id, Tracker.all, :id, :name) %>
+              </label>
+            </p>
+
+            <p>
+              <label>
+                <%= RecurringTask.human_attribute_name(:time) %>
+                <%= f.time_select :time, minute_step: 5 %>
+              </label>
+            </p>
+          </td>
+
+          <td valign="top" width="30%">
+            <p>
+              <label>
+                <%= l('month') %>
+
+                <% month_names.compact.each_with_index do |m, index| %>
+                <% i = index + 1 %>
+                <p>
+                  <label>
+                    <%= m %>
+                    <%= check_box_tag 'recurring_task[months][]', i, checked: @schedule.months[i] %>
+                  </label>
+                </p>
+                <% end %>
+              </label>
+            </p>
+          </td>
+
+          <td valign="top" width="60%">
+            <div><%= l('note') %><br><br></div>
+
+            <fieldset class="box tabular">
+              <div style="float: left; margin-left: 5em;">
+                <p>
+                  <label>
+                    <input type="radio" name="recurring_task[client_run_type]"
+                           value="<%= RecurringTask::RUN_TYPE_M_DAYS %>"<%= ' checked' if @schedule.run_type == RecurringTask::RUN_TYPE_M_DAYS %>> <%= l('month_day') %>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <select id="month_days" name="recurring_task[month_days][]" multiple style="width: 500px; height: 450px;">
+                      <% 1.upto(31) do |i| %>
+                        <option value="<%= i %>"<%= ' selected' if @schedule.month_days.include?(i.to_s) %>>
+                          <%= i %>
+                        </option>
+                      <% end %>
+                      <option value="last_day"<%= ' selected' if @schedule.month_days.include?('last_day') %>>
+                        <%= l('last_day') %>
+                      </option>
+                    </select>
+                  </label>
+                  <br>
+                </p>
+              </div>
+
+              <div style="float: left;">
+                <p>
+                  <label>
+                    <input type="radio" name="recurring_task[client_run_type]"
+                           value="<%= RecurringTask::RUN_TYPE_W_DAYS %>"<%= ' checked' if @schedule.run_type == RecurringTask::RUN_TYPE_W_DAYS %>> <%= l('week_day') %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:monday) %>
+                    <%= f.check_box :monday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:tuesday) %>
+                    <%= f.check_box :tuesday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:wednesday) %>
+                    <%= f.check_box :wednesday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:thursday) %>
+                    <%= f.check_box :thursday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:friday) %>
+                    <%= f.check_box :friday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:saturday) %>
+                    <%= f.check_box :saturday, class: 'week_day' %>
+                  </label>
+                </p>
+
+                <p>
+                  <label>
+                    <%= RecurringTask.human_attribute_name(:sunday) %>
+                    <%= f.check_box :sunday, class: 'week_day' %>
+                  </label>
+                </p>
+              </div>
+            </fieldset>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+
+  <div>
+    <%= f.submit ( f.object.new_record? ? l(:button_add) : l(:button_change)) %>
+
+    <% if @schedule.persisted? %><%= link_to(l(:button_delete), recurring_task_path(@schedule), method: :delete, data: {confirm: l(:text_are_you_sure)}) %> |
+    <% end %>
+
+    <%= link_to(l(:button_cancel), issue_path(@issue)) %>
+  </div>
+<% end %>

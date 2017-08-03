@@ -1,14 +1,14 @@
 require File.expand_path('../../../test_helper', __FILE__)
 
-class WeeklyScheduleTest < ActiveSupport::TestCase
+class RecurringTaskTest < ActiveSupport::TestCase
   def test_full_days
-    weekly_schedule = WeeklySchedule.new
-    assert weekly_schedule.days, WeeklySchedule::DAYS
+    recurring_task = RecurringTask.new
+    assert recurring_task.days, RecurringTask::DAYS
   end
 
   def test_partial_days
-    weekly_schedule = WeeklySchedule.new
-    weekly_schedule.monday = true
-    assert weekly_schedule.days, WeeklySchedule::DAYS.dup.delete('monday')
+    recurring_task = RecurringTask.new
+    recurring_task.monday = true
+    assert recurring_task.days, RecurringTask::DAYS.dup.delete('monday')
   end
 end

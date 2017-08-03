@@ -18,10 +18,14 @@ module RedmineRecurringTasks
 
       schedule_hash = {
         issue_id: 1,
-        tracker_id: 1
+        tracker_id: 1,
+        month_days: []
       }
       schedule_hash[week_day.to_sym] = true
-      schedule = WeeklySchedule.create!(schedule_hash)
+      schedule = RecurringTask.new(schedule_hash)
+      schedule.months = nil
+      schedule.save!
+
       assert [schedule] == IssueChecker.new.schedules
     end
 
@@ -30,8 +34,8 @@ module RedmineRecurringTasks
       new_issue.copy_from(default_issue, attachments: true, subtasks: true, link: false)
       new_issue.save!
 
-      weekly_schedule = WeeklySchedule.new(issue: new_issue, tracker_id: new_issue.tracker_id)
-      WeeklySchedule::DAYS.each{|d| weekly_schedule.public_send("#{d}=", true)}
+      weekly_schedule = RecurringTask.new(issue: new_issue, tracker_id: new_issue.tracker_id)
+      RecurringTask::DAYS.each{|d| weekly_schedule.public_send("#{d}=", true)}
       weekly_schedule.save!
 
       new_issue.destroy!
@@ -44,7 +48,7 @@ module RedmineRecurringTasks
         issue_id: 1,
         tracker_id: 1
       }
-      WeeklySchedule.create!(schedule_hash)
+      RecurringTask.create!(schedule_hash)
       assert [] == IssueChecker.new.schedules
     end
 

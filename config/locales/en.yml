@@ -5,6 +5,13 @@ en:
   schedule: Schedule
   template: Template
 
+  month: Month
+  week_day: Day of a week
+  month_day: Day of a month
+  last_day: Last day
+
+  note: You can choose day of a month or day of a week, not both. And if you chose day of a month, select 31 day, but the month have only 28 days, so task will not run.
+
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule
 

@@ -9,31 +9,29 @@ module RedmineRecurringTasks
       @settings = settings
     end
 
-    # @return [Array<WeeklySchedule>] a schedules which should be executed
-    def schedules
-      date = Time.now
-      week_day = date.strftime('%A').downcase
-
-      WeeklySchedule.where("#{week_day} = true").map do |schedule|
-        time_came = schedule.time.strftime('%H%M%S') <= date.strftime('%H%M%S')
-
-        if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.strftime('%Y%m%d') < date.strftime('%Y%m%d'))
-          schedule
-        end
-      end.compact
-    end
-
     # @return [void]
     def call
       schedules.each do |schedule|
         begin
           schedule.execute(settings['associations'])
         rescue => e
-          puts e.to_s
-          puts e.backtrace.join("\n")
+          logger.error e.to_s
+          logger.error e.backtrace.join("\n")
           next
         end
       end
+    end
+
+    # @return [Array<RecurringTask>] a schedules which should be executed
+    def schedules
+      RecurringTask.schedules
+    end
+
+    private
+
+    # @return [Logger] a log class
+    def logger
+      @logger ||= Logger.new(Rails.root.join('log', 'redmine_recurring_tasks.log'))
     end
   end
 end

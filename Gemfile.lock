@@ -1,0 +1,31 @@
+GEM
+  specs:
+    activemodel (5.0.4)
+      activesupport (= 5.0.4)
+    activerecord (5.0.4)
+      activemodel (= 5.0.4)
+      activesupport (= 5.0.4)
+      arel (~> 7.0)
+    activesupport (5.0.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (~> 0.7)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    arel (7.1.4)
+    concurrent-ruby (1.0.5)
+    deep_cloneable (2.2.2)
+      activerecord (>= 3.1.0, < 5.2.0)
+    i18n (0.8.6)
+    minitest (5.10.2)
+    thread_safe (0.3.6)
+    tzinfo (1.2.3)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  deep_cloneable (~> 2.2.2)
+
+BUNDLED WITH
+   1.15.2
