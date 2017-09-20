@@ -63,7 +63,7 @@
                 <p>
                   <label>
                     <%= m %>
-                    <%= check_box_tag 'recurring_task[months][]', i, checked: @schedule.months[i] %>
+                    <%= check_box_tag 'recurring_task[months][]', i, @schedule.months.include?(i.to_s) %>
                   </label>
                 </p>
                 <% end %>
