@@ -1,3 +1,4 @@
+[![Rate at redmine.org](http://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](http://www.redmine.org/plugins/redmine_recurring_tasks)
 # Redmine Recurring Tasks
 
 [![Build Status](https://travis-ci.org/centosadmin/redmine_recurring_tasks.svg?branch=master)](https://travis-ci.org/centosadmin/redmine_recurring_tasks)
@@ -89,7 +90,7 @@ And add cron job line
 
 If you have any plugins, which for some reason doesn't copying in spawned issues, you can set specific issue associations fields in plugin settings. But be careful — this option can break work plugin scheduler.
 
-For example, if you using plugin *Redmine checklists*, you can check "checklists" in RedmineRecurringTasks settings. 
+For example, if you using plugin *Redmine checklists*, you can check "checklists" in RedmineRecurringTasks settings.
 
 # License
 
