@@ -80,9 +80,8 @@ class RecurringTask < ActiveRecord::Base
 
       # time
       time_came = schedule.time.utc.strftime('%H%M%S').to_i <= current_time.utc.strftime('%H%M%S').to_i
-      not_scheduled_today = schedule.last_try_at.utc.strftime('%Y%m%d').to_i < current_time.utc.strftime('%Y%m%d').to_i
 
-      if time_came && (schedule.last_try_at.nil? || not_scheduled_today)
+      if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.utc.strftime('%Y%m%d').to_i < current_time.utc.strftime('%Y%m%d').to_i)
         schedule
       end
     end.compact
