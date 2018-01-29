@@ -63,12 +63,10 @@ class RecurringTask < ActiveRecord::Base
     week_day  = current_time.strftime('%A').downcase
     month_day = current_time.day
 
-    scope = self.all
-
     # months
-    scope = scope.where("months LIKE '%\"#{current_time.month.to_s}\"%'")
+    scope = where("months LIKE '%\"#{current_time.month.to_s}\"%'")
 
-    scope.map do |schedule|
+    scope.select do |schedule|
       if schedule.month_days.empty?
         # week day
         next unless schedule.public_send(week_day)
@@ -79,12 +77,8 @@ class RecurringTask < ActiveRecord::Base
       end
 
       # time
-      time_came = schedule.time.utc.strftime('%H%M%S').to_i <= current_time.utc.strftime('%H%M%S').to_i
-
-      if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.utc.strftime('%Y%m%d').to_i < current_time.utc.strftime('%Y%m%d').to_i)
-        schedule
-      end
-    end.compact
+      schedule.time_came?(current_time)
+    end
   end
 
   # @return [Issue] copied issue
@@ -123,6 +117,12 @@ class RecurringTask < ActiveRecord::Base
   # @return [Symbol] return :month_days if any month days are present, else :week_days
   def run_type
     self.month_days.any? ? RUN_TYPE_M_DAYS : RUN_TYPE_W_DAYS
+  end
+
+  def time_came?(current_time = Time.now)
+    utc_offset = current_time.zone.to_f
+    time.in_time_zone(utc_offset).strftime('%H%M%S').to_i <= current_time.strftime('%H%M%S').to_i &&
+      (last_try_at.nil? || last_try_at.in_time_zone(utc_offset).strftime('%Y%m%d').to_i < current_time.strftime('%Y%m%d').to_i)
   end
 
   private
