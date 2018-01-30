@@ -91,13 +91,13 @@ class RecurringTaskTest < ActiveSupport::TestCase
   end
 
   def test_copy_has_same_author_when_anonymous_user_not_used
-    Setting.plugin_redmine_recurring_tasks = { 'use_anon1ymous_user' => nil }
+    Setting.plugin_redmine_recurring_tasks = { 'use_anonymous_user' => nil }
     assert default_issue.author_id == default_schedule.copy_issue.author_id
   end
 
   def test_copy_has_anonymous_author_when_anonymous_user_used
     Setting.plugin_redmine_recurring_tasks = { 'use_anonymous_user' => 1 }
-    assert default_issue.author_id == User.anonymous.id
+    assert default_schedule.copy_issue.author_id == User.anonymous.id
   end
 
   def test_execute
