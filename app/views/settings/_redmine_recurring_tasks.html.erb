@@ -10,3 +10,8 @@
 <p>
   <%= button_tag l(:button_reset), type: :button, onClick: '$("#settings_associations option:selected").prop("selected", false);' %>
 </p>
+<p>
+  <%= label_tag 'settings[use_anonymous_user]', l(:settings_use_anonymous_user) %>
+  <%#= hidden_field_tag 'settings[use_anonymous_user]', false %>
+  <%= check_box_tag 'settings[use_anonymous_user]', 1, @settings[:use_anonymous_user] %>
+</p>

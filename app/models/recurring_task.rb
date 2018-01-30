@@ -85,13 +85,20 @@ class RecurringTask < ActiveRecord::Base
   def copy_issue(associations = nil)
     new_issue = issue.deep_clone include: associations
     new_issue.init_journal(issue.author)
-    unless issue.author.allowed_to?(:copy_issues, issue.project)
-      fail "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
-    end
+    new_author =
+      if Setting.plugin_redmine_recurring_tasks['use_anonymous_user']
+        User.anonymous
+      else
+        unless issue.author.allowed_to?(:copy_issues, issue.project)
+          raise "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
+        end
+        issue.author
+      end
+
     new_issue.copy_from(issue, attachments: true, subtasks: true, link: false)
     new_issue.parent_issue_id = issue.parent_id
     new_issue.tracker_id = self.tracker_id
-    new_issue.author_id = issue.author_id
+    new_issue.author_id = new_author.id
     new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
     if issue.watcher_users.size > 0 && new_issue.watchers.size != issue.watchers.size
       issue.watcher_users.each do |user|
