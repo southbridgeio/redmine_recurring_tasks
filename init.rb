@@ -20,7 +20,8 @@ Redmine::Plugin.register :redmine_recurring_tasks do
 
   settings(
     default: {
-      'associations' => RedmineRecurringTasks.issue_associations
+      'associations' => RedmineRecurringTasks.issue_associations,
+      'use_anonymous_user' => 1
     },
     partial: 'settings/redmine_recurring_tasks'
   )
