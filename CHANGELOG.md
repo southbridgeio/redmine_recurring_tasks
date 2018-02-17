@@ -1,3 +1,8 @@
+# 0.2.0
+
+* Fix UTC-related issues
+* Add setting for anonymous user usage
+
 # 0.1.0
 
 * Add logging errors via logger
