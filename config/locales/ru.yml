@@ -15,6 +15,7 @@ ru:
   permission_manage_schedule: Управление расписанием
 
   settings_associations: Связи Задачи для копирования
+  settings_use_anonymous_user: Использовать анонимного пользователя для создания задач
 
   activerecord:
     attributes:

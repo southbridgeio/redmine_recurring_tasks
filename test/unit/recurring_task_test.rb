@@ -90,8 +90,14 @@ class RecurringTaskTest < ActiveSupport::TestCase
     assert default_issue.subject == default_schedule.copy_issue.subject
   end
 
-  def test_copy_has_same_author
+  def test_copy_has_same_author_when_anonymous_user_not_used
+    Setting.plugin_redmine_recurring_tasks = { 'use_anonymous_user' => nil }
     assert default_issue.author_id == default_schedule.copy_issue.author_id
+  end
+
+  def test_copy_has_anonymous_author_when_anonymous_user_used
+    Setting.plugin_redmine_recurring_tasks = { 'use_anonymous_user' => 1 }
+    assert default_schedule.copy_issue.author_id == User.anonymous.id
   end
 
   def test_execute
@@ -137,6 +143,36 @@ class RecurringTaskTest < ActiveSupport::TestCase
     default_schedule.month_days = days
     assert default_schedule.save
     assert default_schedule.month_days_parsed == [Time.now.end_of_month.day.to_s]
+  end
+
+  def test_time_came
+    current_time = Time.parse('10:00:00').in_time_zone(3)
+    schedule = RecurringTask.new(time: current_time)
+    assert schedule.time_came?(current_time)
+    assert schedule.time_came?(current_time + 1.minute)
+    refute schedule.time_came?(current_time - 1.minute)
+    refute schedule.time_came?(current_time + 14.hours)
+  end
+
+  def test_time_came_if_last_try_at_is_earlier_than_current_day
+    current_time = Time.parse('00:00:00')
+    last_try_at = current_time - 1.day
+    schedule = RecurringTask.new(time: current_time, last_try_at: last_try_at)
+    assert schedule.time_came?(current_time)
+  end
+
+  def test_time_came_if_last_try_at_day_is_equal_to_current_day
+    current_time = Time.parse('00:00:00')
+    last_try_at = current_time + 1.minute
+    schedule = RecurringTask.new(time: current_time, last_try_at: last_try_at)
+    refute schedule.time_came?(current_time)
+  end
+
+  def test_time_came_if_last_try_at_day_is_later_than_current_day
+    current_time = Time.parse('00:00:00')
+    last_try_at = current_time + 1.day
+    schedule = RecurringTask.new(time: current_time, last_try_at: last_try_at)
+    refute schedule.time_came?(current_time)
   end
 
   private

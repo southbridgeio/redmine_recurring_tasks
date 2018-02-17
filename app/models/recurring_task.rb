@@ -63,12 +63,10 @@ class RecurringTask < ActiveRecord::Base
     week_day  = current_time.strftime('%A').downcase
     month_day = current_time.day
 
-    scope = self.all
-
     # months
-    scope = scope.where("months LIKE '%\"#{current_time.month.to_s}\"%'")
+    scope = where("months LIKE '%\"#{current_time.month.to_s}\"%'")
 
-    scope.map do |schedule|
+    scope.select do |schedule|
       if schedule.month_days.empty?
         # week day
         next unless schedule.public_send(week_day)
@@ -79,25 +77,28 @@ class RecurringTask < ActiveRecord::Base
       end
 
       # time
-      time_came = schedule.time.strftime('%H%M%S') <= current_time.strftime('%H%M%S')
-
-      if time_came && (schedule.last_try_at.nil? || schedule.last_try_at.strftime('%Y%m%d') < current_time.strftime('%Y%m%d'))
-        schedule
-      end
-    end.compact
+      schedule.time_came?(current_time)
+    end
   end
 
   # @return [Issue] copied issue
   def copy_issue(associations = nil)
     new_issue = issue.deep_clone include: associations
     new_issue.init_journal(issue.author)
-    unless issue.author.allowed_to?(:copy_issues, issue.project)
-      fail "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
-    end
+    new_author =
+      if Setting.plugin_redmine_recurring_tasks['use_anonymous_user']
+        User.anonymous
+      else
+        unless issue.author.allowed_to?(:copy_issues, issue.project)
+          raise "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
+        end
+        issue.author
+      end
+
     new_issue.copy_from(issue, attachments: true, subtasks: true, link: false)
     new_issue.parent_issue_id = issue.parent_id
     new_issue.tracker_id = self.tracker_id
-    new_issue.author_id = issue.author_id
+    new_issue.author_id = new_author.id
     new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
     if issue.watcher_users.size > 0 && new_issue.watchers.size != issue.watchers.size
       issue.watcher_users.each do |user|
@@ -123,6 +124,12 @@ class RecurringTask < ActiveRecord::Base
   # @return [Symbol] return :month_days if any month days are present, else :week_days
   def run_type
     self.month_days.any? ? RUN_TYPE_M_DAYS : RUN_TYPE_W_DAYS
+  end
+
+  def time_came?(current_time = Time.now)
+    utc_offset = current_time.utc_offset / 60 / 60
+    time.in_time_zone(utc_offset).strftime('%H%M%S').to_i <= current_time.strftime('%H%M%S').to_i &&
+      (last_try_at.nil? || last_try_at.in_time_zone(utc_offset).strftime('%Y%m%d').to_i < current_time.strftime('%Y%m%d').to_i)
   end
 
   private
