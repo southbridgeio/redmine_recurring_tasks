@@ -100,6 +100,14 @@ class RecurringTaskTest < ActiveSupport::TestCase
     assert default_schedule.copy_issue.author_id == User.anonymous.id
   end
 
+  def test_copy_when_project_is_closed
+    assert closed_project_schedule.copy_issue.nil?
+  end
+
+  def test_copy_when_project_is_archived
+    assert archived_project_schedule.copy_issue.nil?
+  end
+
   def test_execute
     default_schedule.execute
     assert default_schedule.last_try_at.present?
@@ -183,5 +191,17 @@ class RecurringTaskTest < ActiveSupport::TestCase
 
   def default_schedule
     @default_schedule ||= RecurringTask.create(issue: default_issue, tracker_id: default_issue.tracker_id)
+  end
+
+  def closed_project_schedule
+    project = Project.new
+    project.status = Project::STATUS_CLOSED
+    RecurringTask.new(issue: Issue.new(project: project))
+  end
+
+  def archived_project_schedule
+    project = Project.new
+    project.status = Project::STATUS_ARCHIVED
+    RecurringTask.new(issue: Issue.new(project: project))
   end
 end
