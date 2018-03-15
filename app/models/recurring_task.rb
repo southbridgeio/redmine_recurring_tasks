@@ -83,6 +83,8 @@ class RecurringTask < ActiveRecord::Base
 
   # @return [Issue] copied issue
   def copy_issue(associations = nil)
+    return if issue.project.archived? || issue.project.closed?
+
     new_issue = issue.deep_clone include: associations
     new_issue.init_journal(issue.author)
     new_author =
