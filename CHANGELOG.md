@@ -1,3 +1,10 @@
+# 0.2.1
+
+* Copying issues only from active project
+* Plugin association removed from settings
+* Add warning in plugin settings page
+* Add Russian readme
+
 # 0.2.0
 
 * Fix UTC-related issues
