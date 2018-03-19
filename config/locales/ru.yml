@@ -14,7 +14,8 @@ ru:
   permission_view_schedule: Просмотр расписания
   permission_manage_schedule: Управление расписанием
 
-  settings_associations: Связи Задачи для копирования
+  settings_associations: Связи для копирования
+  settings_associations_warning: Внимание! Некорректные настройки могут нарушить корректную работу плагина. При возникновении проблем попробуйте снять все опции.
   settings_use_anonymous_user: Использовать анонимного пользователя для создания задач
 
   activerecord:

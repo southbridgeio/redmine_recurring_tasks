@@ -3,6 +3,8 @@
 
 [![Build Status](https://travis-ci.org/centosadmin/redmine_recurring_tasks.svg?branch=master)](https://travis-ci.org/centosadmin/redmine_recurring_tasks)
 
+[Русская версия](README-RU.md)
+
 Plugin for creating scheduled tasks from templates.
 
 # Installation

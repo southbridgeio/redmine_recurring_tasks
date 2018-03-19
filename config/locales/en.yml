@@ -19,4 +19,5 @@ en:
   label_edit_schedule: Edit schedule
 
   settings_associations: Issue associations to copy
+  settings_associations_warning: Warning! Incorrect settings may break plugin work. In case of problem try to turn off all options.
   settings_use_anonymous_user: Use anonymous user while copying issues
