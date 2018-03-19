@@ -31,7 +31,7 @@ To run scheduling task you should run rake task
 
 ```
 cd {REDMINE_ROOT}
-bundle exec rake redmine_recurring_tasks:exec
+bundle exec rake redmine_recurring_tasks:exec RAILS_ENV=production
 ```
 
 And to do it periodically you may use cron or another external scheduler.
@@ -85,7 +85,7 @@ $ crontab -e
 And add cron job line
 
 ```
-*/5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec
+*/5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec'
 ```
 
 # Settings
