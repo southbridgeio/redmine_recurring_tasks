@@ -28,13 +28,14 @@ module RedmineRecurringTasks
     end
 
     def schedule_template
-      return '' if recurring_task_root.issue == __getobj__
+      root_issue = recurring_task_root&.issue
+      return '' if root_issue.blank? || root_issue == __getobj__
 
       result =
         <<-HTML
           <div>
             #{I18n.t(:template)}:
-            #{ActionController::Base.helpers.link_to("#{recurring_task_root.issue.subject.truncate(60)} ##{recurring_task_root.issue.id}", issue_path(recurring_task_root.issue))}
+            #{ActionController::Base.helpers.link_to("#{root_issue.subject.truncate(60)} ##{root_issue.id}", issue_path(root_issue))}
           </div>
         HTML
       result.html_safe
