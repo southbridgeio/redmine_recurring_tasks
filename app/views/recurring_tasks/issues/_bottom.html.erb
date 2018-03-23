@@ -13,28 +13,10 @@
     </div>
   <% end %>
 
-  <p><strong><%= l(:schedule) %></strong></p>
-
-  <% if @issue.recurring_task.present? %>
-    <% if @issue.recurring_task_root.run_type == RecurringTask::RUN_TYPE_W_DAYS %>
-      <ul>
-        <% @issue.recurring_task_root.days.each do |field| %>
-        <li>
-          <%= RecurringTask.human_attribute_name(field) %>, <%= @issue.recurring_task_root.time.to_s(:time) %>
-        </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <%= @issue.recurring_task_root.month_days_parsed.join(', ') %> — <%= @issue.recurring_task_root.time.to_s(:time) %>
-    <% end %>
-  <% elsif @issue.recurring_task_root.present? %>
-    <% if @issue.recurring_task_root.issue != @issue %>
-      <% schedule_root_issue = @issue.recurring_task_root.issue %>
-      <div>
-        <%= l(:template) %>:
-        <%= link_to("#{schedule_root_issue.subject.truncate(60)} ##{schedule_root_issue.id}", issue_path(@issue.recurring_task_root.issue)) %>
-      </div>
-    <% end %>
+  <% RedmineRecurringTasks::IssuePresenter.new(@issue).tap do |issue| %>
+    <p><strong><%= l(:schedule) %></strong></p>
+    <%= issue.schedule %>
+    <%= issue.schedule_template %>
   <% end %>
 </div>
 <% end %>
