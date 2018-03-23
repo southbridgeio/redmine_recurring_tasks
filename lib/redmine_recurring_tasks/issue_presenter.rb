@@ -10,7 +10,7 @@ module RedmineRecurringTasks
         return "#{recurring_task_root.month_days_parsed.join(', ')} #{recurring_task_root.months.map { |m| I18n.t('date.month_names')[m.to_i] }.join(', ')} — #{recurring_task_root.time.to_s(:time)}"
       end
 
-      days = @issue.recurring_task_root.days.map do |field|
+      days = recurring_task_root.days.map do |field|
         <<-HTML
           <li>
             #{RecurringTask.human_attribute_name(field)}, #{recurring_task_root.time.to_s(:time)}
