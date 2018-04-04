@@ -8,6 +8,8 @@ reloader.to_prepare do
   end
 end
 
+Rails.application.config.eager_load_paths += Dir.glob("#{Rails.application.config.root}/plugins/redmine_recurring_tasks/{lib,app/models,app/controllers}")
+
 Redmine::Plugin.register :redmine_recurring_tasks do
   name 'Redmine Recurring Tasks'
   author 'Southbridge'
