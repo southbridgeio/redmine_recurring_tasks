@@ -164,7 +164,7 @@ class RecurringTaskTest < ActiveSupport::TestCase
 
   def test_time_came_if_last_try_at_is_earlier_than_current_day
     current_time = Time.parse('00:00:00')
-    last_try_at = current_time - 1.hour
+    last_try_at = current_time - 2.days
     schedule = RecurringTask.new(time: current_time, last_try_at: last_try_at)
     assert schedule.time_came?(current_time)
   end
