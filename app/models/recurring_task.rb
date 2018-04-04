@@ -130,6 +130,7 @@ class RecurringTask < ActiveRecord::Base
 
   def time_came?(current_time = Time.now)
     utc_offset = current_time.utc_offset / 60 / 60
+    utc_offset -= 1 if current_time.dst?
     time.in_time_zone(utc_offset).strftime('%H%M%S').to_i <= current_time.strftime('%H%M%S').to_i &&
       (last_try_at.nil? || last_try_at.in_time_zone(utc_offset).strftime('%Y%m%d').to_i < current_time.strftime('%Y%m%d').to_i)
   end
