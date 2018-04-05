@@ -1,3 +1,9 @@
+# 0.2.2
+
+* Fix schedule section on issue page
+* Fix time chek for DST
+* Fix constants loading issue
+
 # 0.2.1
 
 * Copying issues only from active project
