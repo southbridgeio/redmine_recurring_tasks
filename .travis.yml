@@ -7,6 +7,9 @@ addons:
 
 env:
   - REDMINE_VER=3.4-stable
+  - TZ=Europe/Moscow
+  - TZ=UTC
+  - TZ=Europe/Dublin
 
 branches:
   only:
