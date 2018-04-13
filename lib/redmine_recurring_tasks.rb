@@ -6,6 +6,7 @@ module RedmineRecurringTasks
                            'relations_from', 'relations_to', 'attachments', 'custom_values', 'watchers',
                            'watcher_users', 'recurring_task']
 
-    Issue.reflections.keys.dup - default_associations
+    through_reflections = Issue.reflections.select { |k, v| v.is_a?(ActiveRecord::Reflection::ThroughReflection) }.map(&:first)
+    Issue.reflections.keys.dup - default_associations - through_reflections
   end
 end
