@@ -7,7 +7,7 @@ addons:
   postgresql: "9.4"
 
 env:
-  - REDMINE_VER=3.3-stable
+  - REDMINE_VER=3.4-stable
 
 branches:
   only:
