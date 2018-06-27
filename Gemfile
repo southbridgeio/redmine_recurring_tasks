@@ -1,1 +1,1 @@
-gem 'deep_cloneable', '~> 2.2.2'
+gem 'deep_cloneable', git: 'https://github.com/centosadmin/deep_cloneable.git'

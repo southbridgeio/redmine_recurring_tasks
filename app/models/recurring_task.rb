@@ -82,39 +82,42 @@ class RecurringTask < ActiveRecord::Base
   end
 
   # @return [Issue] copied issue
-  def copy_issue(associations = nil)
+  def copy_issue(associations = [])
     return if issue.project.archived? || issue.project.closed?
 
-    new_issue = issue.deep_clone include: associations
-    new_issue.init_journal(issue.author)
-    new_author =
-      if Setting.plugin_redmine_recurring_tasks['use_anonymous_user']
-        User.anonymous
-      else
-        unless issue.author.allowed_to?(:copy_issues, issue.project)
-          raise "User #{issue.author.name} (##{issue.author.id}) unauthorized to copy issues"
+    issue.deep_clone(include: associations, except: %i[parent_id root_id lft rgt created_on updated_on closed_on]) do |original, copy|
+      case original
+      when Issue
+        copy.init_journal(original.author)
+        new_author =
+          if Setting.plugin_redmine_recurring_tasks['use_anonymous_user']
+            User.anonymous
+          else
+            unless original.author.allowed_to?(:copy_issues, issue.project)
+              raise "User #{original.author.name} (##{original.author.id}) unauthorized to copy issues"
+            end
+            original.author
+          end
+        copy.custom_field_values = original.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
+        copy.author_id = new_author.id
+        copy.tracker_id = original.tracker_id
+        copy.parent_issue_id = original.parent_id
+        copy.status = copy.new_statuses_allowed_to(original.author).first
+        copy.attachments = original.attachments.map do |attachement|
+          attachement.copy(container: original)
         end
-        issue.author
-      end
+        copy.watcher_user_ids = original.watcher_users.select { |u| u.status == User::STATUS_ACTIVE }.map(&:id)
 
-    new_issue.copy_from(issue, attachments: true, subtasks: true, link: false)
-    new_issue.parent_issue_id = issue.parent_id
-    new_issue.tracker_id = self.tracker_id
-    new_issue.author_id = new_author.id
-    new_issue.status = new_issue.new_statuses_allowed_to(issue.author).first
-    if issue.watcher_users.size > 0 && new_issue.watchers.size != issue.watchers.size
-      issue.watcher_users.each do |user|
-        new_issue.add_watcher(user)
-      end
-    end
-    if issue.due_date.present?
-      new_issue.start_date = Time.now
+        if original.due_date.present?
+          copy.start_date = Time.now
 
-      issue_date = (issue.start_date || issue.created_on).to_date
-      new_issue.due_date = new_issue.start_date + (issue.due_date - issue_date)
-    end
-    new_issue.save!
-    new_issue
+          issue_date = (original.start_date || original.created_on).to_date
+          copy.due_date = copy.start_date + (original.due_date - issue_date)
+        end
+      else
+        next
+      end
+    end.tap(&:save!)
   end
 
   # @return [Boolean] boolean result of copy issue and save of schedule last try timestamp
