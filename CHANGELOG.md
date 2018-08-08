@@ -1,3 +1,8 @@
+# 0.2.3
+
+* Use Redmine 3.4-stable in travis with Ruby 2.3 and different time zones
+* Use only deep_cloneable to copy issues 
+
 # 0.2.2
 
 * Fix schedule section on issue page
