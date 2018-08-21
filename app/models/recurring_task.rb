@@ -1,5 +1,5 @@
 class RecurringTask < ActiveRecord::Base
-  unloadable
+  
 
   belongs_to :issue
   belongs_to :tracker

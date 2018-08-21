@@ -1,5 +1,5 @@
 class RecurringTasksController < ApplicationController
-  unloadable
+  
 
   before_filter :set_schedule, only: [:edit, :destroy, :update]
   before_filter :set_issue
