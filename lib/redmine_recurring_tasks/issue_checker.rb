@@ -14,9 +14,12 @@ module RedmineRecurringTasks
       schedules.each do |schedule|
         begin
           schedule.execute(settings['associations'])
+        rescue RecurringTask::UnauthorizedError => e
+          log_error(e)
+          next
         rescue => e
-          logger.error e.to_s
-          logger.error e.backtrace.join("\n")
+          Airbrake.notify(e) if defined?(Airbrake)
+          log_error(e)
           next
         end
       end
@@ -28,6 +31,11 @@ module RedmineRecurringTasks
     end
 
     private
+
+    def log_error(e)
+      logger.error e.to_s
+      logger.error e.backtrace.join("\n")
+    end
 
     # @return [Logger] a log class
     def logger
