@@ -1,14 +1,16 @@
 language: ruby
 rvm:
-  - 2.3
+  - 2.3.6
+  - 2.5.1
 
 addons:
   postgresql: "9.4"
 
 env:
-  - REDMINE_VER=3.4-stable; TZ=Europe/Moscow
   - REDMINE_VER=3.4-stable; TZ=UTC
-  - REDMINE_VER=3.4-stable; TZ=Europe/Dublin
+  - REDMINE_VER=4.0-stable; TZ=Europe/Moscow
+  - REDMINE_VER=4.0-stable; TZ=UTC
+  - REDMINE_VER=4.0-stable; TZ=Europe/Dublin
 
 branches:
   only:
