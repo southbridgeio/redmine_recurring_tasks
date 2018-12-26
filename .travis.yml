@@ -12,6 +12,11 @@ env:
   - REDMINE_VER=4.0-stable; TZ=UTC
   - REDMINE_VER=4.0-stable; TZ=Europe/Dublin
 
+matrix:
+  exclude:
+  - rvm: 2.6.0
+    env: REDMINE_VER=3.4-stable
+
 branches:
   only:
     - master
