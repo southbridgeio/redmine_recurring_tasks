@@ -1,5 +1,5 @@
 class RecurringTask < ActiveRecord::Base
-  unloadable
+  UnauthorizedError = Class.new(StandardError)
 
   belongs_to :issue
   belongs_to :tracker
@@ -94,7 +94,7 @@ class RecurringTask < ActiveRecord::Base
             User.anonymous
           else
             unless original.author.allowed_to?(:copy_issues, issue.project)
-              raise "User #{original.author.name} (##{original.author.id}) unauthorized to copy issues"
+              raise UnauthorizedError, "User #{original.author.name} (##{original.author.id}) unauthorized to copy issues"
             end
             original.author
           end

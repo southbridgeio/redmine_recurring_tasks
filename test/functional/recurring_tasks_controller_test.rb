@@ -21,7 +21,11 @@ class RecurringTasksControllerTest < ActionController::TestCase
     @request.session[:user_id] = 2
 
     with_settings default_language: 'en' do
-      get :new, issue_id: 1
+      if Rails.version < '5.0'
+        get :new, issue_id: 1
+      else
+        get :new, params: { issue_id: 1 }
+      end
 
       assert_response :success
       assert_template 'new'
@@ -32,7 +36,12 @@ class RecurringTasksControllerTest < ActionController::TestCase
     @request.session[:user_id] = 2
 
     with_settings default_language: 'en' do
-      get :new, issue_id: 666
+      if Rails.version < '5.0'
+        get :new, issue_id: 666
+      else
+        get :new, params: { issue_id: 666 }
+      end
+
       assert_response :not_found
     end
   end

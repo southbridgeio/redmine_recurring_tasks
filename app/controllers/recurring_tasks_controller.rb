@@ -1,9 +1,7 @@
 class RecurringTasksController < ApplicationController
-  unloadable
-
-  before_filter :set_schedule, only: [:edit, :destroy, :update]
-  before_filter :set_issue
-  before_filter :check_permission
+  before_action :set_schedule, only: [:edit, :destroy, :update]
+  before_action :set_issue
+  before_action :check_permission
 
   def new
     existing_schedule = RecurringTask.find_by(issue: @issue)

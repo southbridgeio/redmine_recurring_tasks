@@ -4,7 +4,7 @@ module RedmineRecurringTasks
     module IssuePatch
       def self.included(base) # :nodoc:
         base.class_eval do
-          unloadable
+          
 
           has_one :recurring_task, dependent: :destroy
 
