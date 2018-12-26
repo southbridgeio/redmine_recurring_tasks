@@ -15,7 +15,7 @@ env:
 matrix:
   exclude:
   - rvm: 2.6.0
-    env: REDMINE_VER=3.4-stable
+    env: REDMINE_VER=3.4-stable; TZ=UTC
 
 branches:
   only:
