@@ -1,3 +1,8 @@
+# 0.3.0
+
+* Improve errors handling
+* Adapt for Redmine 4
+
 # 0.2.3
 
 * Use Redmine 3.4-stable in travis with Ruby 2.3 and different time zones
