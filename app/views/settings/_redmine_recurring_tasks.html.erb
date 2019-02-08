@@ -15,7 +15,7 @@
 <p>
   <%= label_tag 'settings[copied_issue_status]', l(:settings_copied_issue_status) %>
   <%= select_tag 'settings[copied_issue_status]',
-                 options_for_select([[l(:settings_copy_from_original), 0], *IssueStatus.sorted.map { |status| [status.name, status.id] }]),
+                 options_for_select([[l(:settings_copy_from_original), 0], *IssueStatus.sorted.map { |status| [status.name, status.id] }], @settings[:copied_issue_status]),
                  include_blank: true %>
 </p>
 <p>
