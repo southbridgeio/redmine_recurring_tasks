@@ -85,7 +85,7 @@ class RecurringTask < ActiveRecord::Base
   def copy_issue(associations = [])
     return if issue.project.archived? || issue.project.closed?
 
-    settings = Setting.find_by(name: :plugin_redmine_recurring_tasks).value
+    settings = Setting.find_by(name: :plugin_redmine_recurring_tasks)&.value || {}
 
     issue.deep_clone(include: associations, except: %i[parent_id root_id lft rgt created_on updated_on closed_on]) do |original, copy|
       case original
