@@ -85,12 +85,14 @@ class RecurringTask < ActiveRecord::Base
   def copy_issue(associations = [])
     return if issue.project.archived? || issue.project.closed?
 
+    settings = Setting.find_by(name: :plugin_redmine_recurring_tasks).value
+
     issue.deep_clone(include: associations, except: %i[parent_id root_id lft rgt created_on updated_on closed_on]) do |original, copy|
       case original
       when Issue
         copy.init_journal(original.author)
         new_author =
-          if Setting.plugin_redmine_recurring_tasks['use_anonymous_user']
+          if settings['use_anonymous_user']
             User.anonymous
           else
             unless original.author.allowed_to?(:copy_issues, issue.project)
@@ -102,7 +104,15 @@ class RecurringTask < ActiveRecord::Base
         copy.author_id = new_author.id
         copy.tracker_id = original.tracker_id
         copy.parent_issue_id = original.parent_id
-        copy.status = copy.new_statuses_allowed_to(original.author).first
+        copy.status_id =
+          case settings['copied_issue_status']
+          when nil
+            copy.new_statuses_allowed_to(original.author).sort_by(&:position).first&.id
+          when '0'
+            original.status_id
+          else
+            settings['copied_issue_status']
+          end
         copy.attachments = original.attachments.map do |attachement|
           attachement.copy(container: original)
         end
