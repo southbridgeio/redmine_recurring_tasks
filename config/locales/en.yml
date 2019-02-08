@@ -21,3 +21,5 @@ en:
   settings_associations: Issue associations to copy
   settings_associations_warning: Warning! Incorrect settings may break plugin work. In case of problem try to turn off all options.
   settings_use_anonymous_user: Use anonymous user while copying issues
+  settings_copied_issue_status: Copied issues status
+  settings_copy_from_original: Copy from original issue
