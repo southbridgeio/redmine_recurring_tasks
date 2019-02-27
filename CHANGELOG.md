@@ -1,3 +1,7 @@
+# 0.3.1
+
+* Add copy status setting
+
 # 0.3.0
 
 * Improve errors handling
