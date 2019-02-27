@@ -17,6 +17,8 @@ ru:
   settings_associations: Связи для копирования
   settings_associations_warning: Внимание! Некорректные настройки могут нарушить корректную работу плагина. При возникновении проблем попробуйте снять все опции.
   settings_use_anonymous_user: Использовать анонимного пользователя для создания задач
+  settings_copied_issue_status: Статус задач-копий
+  settings_copy_from_original: Копировать из оригинала
 
   activerecord:
     attributes:
