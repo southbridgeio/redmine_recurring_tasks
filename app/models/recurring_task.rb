@@ -48,6 +48,10 @@ class RecurringTask < ActiveRecord::Base
     super(value.to_json)
   end
 
+  def time=(value)
+    super(value.dup.utc)
+  end
+
   def month_days
     result = super
     result = JSON.parse(result)

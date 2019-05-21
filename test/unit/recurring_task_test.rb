@@ -154,7 +154,7 @@ class RecurringTaskTest < ActiveSupport::TestCase
   end
 
   def test_time_came
-    current_time = Time.parse('10:00:00').in_time_zone(3)
+    current_time = Time.parse('10:00:00')
     schedule = RecurringTask.new(time: current_time)
     assert schedule.time_came?(current_time)
     assert schedule.time_came?(current_time + 1.minute)
