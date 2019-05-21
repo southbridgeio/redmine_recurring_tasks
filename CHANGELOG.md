@@ -1,3 +1,7 @@
+# 0.3.2
+
+* Assign Time.now to copy start_date regardless of due_date presence
+
 # 0.3.1
 
 * Add copy status setting
