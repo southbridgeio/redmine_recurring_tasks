@@ -118,9 +118,9 @@ class RecurringTask < ActiveRecord::Base
         end
         copy.watcher_user_ids = original.watcher_users.select { |u| u.status == User::STATUS_ACTIVE }.map(&:id)
 
-        if original.due_date.present?
-          copy.start_date = Time.now
+        copy.start_date = Time.now
 
+        if original.due_date.present?
           issue_date = (original.start_date || original.created_on).to_date
           copy.due_date = copy.start_date + (original.due_date - issue_date)
         end
