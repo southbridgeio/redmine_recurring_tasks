@@ -1,3 +1,7 @@
+# 0.3.3
+
+* Fix schedule creation
+
 # 0.3.2
 
 * Assign Time.now to copy start_date regardless of due_date presence
