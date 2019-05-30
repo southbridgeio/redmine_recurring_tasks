@@ -49,6 +49,7 @@ class RecurringTask < ActiveRecord::Base
   end
 
   def time=(value)
+    return super unless value.respond_to?(:utc)
     super(value.dup.utc)
   end
 

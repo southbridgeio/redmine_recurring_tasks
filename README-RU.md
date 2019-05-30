@@ -28,7 +28,7 @@ bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 
 ```
 cd {REDMINE_ROOT}
-bundle exec rake redmine_recurring_tasks:exec
+bundle exec rake redmine_recurring_tasks:exec RAILS_ENV=production
 ```
 
 И чтобы запуск происходил периодически, можно воспользоваться cron или другим планировщиком.
@@ -82,13 +82,13 @@ $ crontab -e
 Добавляем строку с cron job
 
 ```
-*/5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec
+*/5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec'
 ```
 
 # Настройки
 
 Если у вас есть какие-то другие плагины, которые по каким-то причинам не копируются в задачи, то
-вы можете указать связи для копирования в настройках плагина. Вниамени! Эти опции могут сломать работу плагина.
+вы можете указать связи для копирования в настройках плагина. Внимание! Эти опции могут сломать работу плагина.
 
 Для примера, если вы используете *Redmine checklists*, вы можете выделить "checklists" в настройках. 
 
