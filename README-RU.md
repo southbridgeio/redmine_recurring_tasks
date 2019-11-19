@@ -1,6 +1,6 @@
 # Redmine Recurring Tasks
 
-[![Build Status](https://travis-ci.org/centosadmin/redmine_recurring_tasks.svg?branch=master)](https://travis-ci.org/centosadmin/redmine_recurring_tasks)
+[![Build Status](https://travis-ci.org/southbridgeio/redmine_recurring_tasks.svg?branch=master)](https://travis-ci.org/southbridgeio/redmine_recurring_tasks)
 
 Плагин для запланированного создания задач с шаблонов
 
@@ -12,7 +12,7 @@
 
 ```
 cd {REDMINE_ROOT}
-git clone https://github.com/centosadmin/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
+git clone https://github.com/southbridgeio/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
@@ -94,7 +94,7 @@ $ crontab -e
 
 # Лицензия
 
-[MIT](https://github.com/centosadmin/redmine_recurring_tasks/blob/master/LICENSE)
+[MIT](https://github.com/southbridgeio/redmine_recurring_tasks/blob/master/LICENSE)
 
 # Автор плагина
 
