@@ -50,6 +50,7 @@
                 <%= RecurringTask.human_attribute_name(:time) %>
                 <%= f.time_select :time, minute_step: 5 %>
               </label>
+              (<%= Time.now.zone %>)
             </p>
           </td>
 
