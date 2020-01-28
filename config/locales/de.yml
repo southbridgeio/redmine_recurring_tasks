@@ -1,0 +1,25 @@
+# German strings go here for Rails i18n
+de:
+  project_module_redmine_recurring_tasks: Redmine wiederkehrende Aufgaben
+  plugin_description: Plugin zum Erstellen von geplanten Aufgaben aus einer Vorlage.
+  schedule: Zeitplan
+  template: Vorlage
+
+  month: Monat
+  week_day: Wochentag
+  month_day: Tag des Monats
+  last_day: Letzter Tag
+
+  note: Sie können entweder den Tag des Monats oder einen Wochentag wählen, nicht beides. Und wenn Sie für den Tag des Monats beispielsweise den 31sten Tag gewählt haben, der Monat jedoch nur 28 Tage hat, dann wird die Aufgabe nicht ausgeführt.
+
+  permission_view_schedule: Zeitplan anzeigen
+  permission_manage_schedule: Zeitplan verwalten
+
+  label_add_schedule: Zeitplan hinzufügen
+  label_edit_schedule: Zeitplan bearbeiten
+
+  settings_associations: Problemzuweisungen zum Kopieren angeben
+  settings_associations_warning: Achtung! Falsche Einstellungen können die Arbeit des Plugins beeinträchtigen. Im Falle eines Problems versuchen Sie alle Optionen zu deaktivieren.
+  settings_use_anonymous_user: Anonymen Benutzer beim Kopieren von Problemen verwenden
+  settings_copied_issue_status: Status der kopierten Probleme
+  settings_copy_from_original: Kopie des ursprünglichen Problems
