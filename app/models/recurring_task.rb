@@ -49,8 +49,14 @@ class RecurringTask < ActiveRecord::Base
   end
 
   def time=(value)
-    return super unless value.respond_to?(:utc)
+    value = Time.new(*value.values) if value.is_a?(Hash)
+
+    return super(value.to_time) unless value.respond_to?(:utc)
     super(value.dup.utc)
+  end
+
+  def time
+    super&.localtime
   end
 
   def month_days

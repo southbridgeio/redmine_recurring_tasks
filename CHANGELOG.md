@@ -1,3 +1,8 @@
+# 0.3.4
+
+* Add Translation Into Brazilian Portuguese
+* Fix time zone issue
+
 # 0.3.3
 
 * Fix schedule creation

@@ -1,0 +1,25 @@
+# Brazilian Portuguese strings go here for Rails i18n
+pt-BR:
+  project_module_redmine_recurring_tasks: Tarefas Recorrentes do Redmine
+  plugin_description: Plugin para criar tarefas agendadas a partir do tamplate.
+  schedule: Cronograma
+  template: Template
+
+  month: Mês
+  week_day: Dia da semana
+  month_day: Dia do mês
+  last_day: Último dia
+
+  note: Você pode escolher o dia de um mês ou dia da semana, não os dois. E se você escolheu o dia de um mês, selecione 31 dias, mas o mês tem apenas 28 dias, portanto, a tarefa não será executada.
+
+  permission_view_schedule: Visualizar cronograma
+  permission_manage_schedule: Gerenciar cronograma
+
+  label_add_schedule: Adicionar cronograma
+  label_edit_schedule: Editar cronograma
+
+  settings_associations: Emitir associações para copiar
+  settings_associations_warning: Aviso! Configurações incorretas podem interromper o trabalho do plugin. Em caso de problema tente desligar todas as opções.
+  settings_use_anonymous_user: Use um usuário anônimo ao copiar problemas
+  settings_copied_issue_status: Status de problemas copiados
+  settings_copy_from_original: Copiar da edição original

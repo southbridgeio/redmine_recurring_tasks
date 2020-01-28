@@ -14,11 +14,11 @@ Redmine::Plugin.register :redmine_recurring_tasks do
   name 'Redmine Recurring Tasks'
   author 'Southbridge'
   description 'Plugin for creating scheduled tasks from template'
-  version '0.3.3'
+  version '0.3.4'
   url 'https://github.com/southbridgeio/redmine_recurring_tasks'
   author_url 'https://github.com/southbridgeio'
 
-  requires_redmine version_or_higher: '3.3'
+  requires_redmine version_or_higher: '3.4'
 
   settings(
     default: {

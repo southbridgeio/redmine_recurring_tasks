@@ -1,20 +1,20 @@
 language: ruby
 rvm:
-  - 2.3.8
-  - 2.6.0
+  - 2.4.9
+  - 2.6.5
 
 addons:
   postgresql: "9.4"
 
 env:
   - REDMINE_VER=3.4-stable; TZ=UTC
-  - REDMINE_VER=4.0-stable; TZ=Europe/Moscow
-  - REDMINE_VER=4.0-stable; TZ=UTC
-  - REDMINE_VER=4.0-stable; TZ=Europe/Dublin
+  - REDMINE_VER=4.1-stable; TZ=Europe/Moscow
+  - REDMINE_VER=4.1-stable; TZ=UTC
+  - REDMINE_VER=4.1-stable; TZ=Europe/Dublin
 
 matrix:
   exclude:
-  - rvm: 2.6.0
+  - rvm: 2.6.5
     env: REDMINE_VER=3.4-stable; TZ=UTC
 
 branches:
