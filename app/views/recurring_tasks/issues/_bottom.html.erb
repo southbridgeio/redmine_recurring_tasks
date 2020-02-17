@@ -6,9 +6,9 @@
   <% if User.current.allowed_to?(:manage_schedule, @project) && (@issue.recurring_task_root.nil? || @issue.recurring_task_root.issue == @issue) %>
     <div class="contextual">
       <% if @issue.recurring_task.present? %>
-        <a class="icon-edit" href="<%= edit_recurring_task_path(@issue.recurring_task_root.id) %>"><%= l(:button_change) %></a>
+        <a href="<%= edit_recurring_task_path(@issue.recurring_task_root.id) %>"><%= l(:button_change) %></a>
       <% else %>
-        <a class="icon-add" href="<%= new_recurring_task_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
+        <a href="<%= new_recurring_task_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
       <% end %>
     </div>
   <% end %>
