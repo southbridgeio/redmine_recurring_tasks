@@ -88,6 +88,42 @@ And add cron job line
 */5 * * * * /bin/bash -l -c 'cd /home/redmine && RAILS_ENV=production bundle exec rake redmine_recurring_tasks:exec'
 ```
 
+### Systemd timer
+
+Usage:
+
+1. Place the files in a [valid folder](https://unix.stackexchange.com/questions/224992/where-do-i-put-my-systemd-unit-file), eg.: `/etc/systemd/system`.
+2. `systemctl daemon-reload`
+3. `systemctl enable --now redmine_recurring_tasks.timer`
+
+`/etc/systemd/system/redmine_recurring_tasks.service`
+
+```
+[Unit]
+Description=Redmine recurring tasks
+
+[Service]
+Type=simple
+User=redmine
+Group=redmine
+WorkingDirectory=/home/redmine
+ExecStart=/usr/local/bin/bundle exec rake redmine_recurring_tasks:exec RAILS_ENV=production
+```
+
+`/etc/systemd/system/redmine_recurring_tasks.timer`
+
+```[Unit]
+Description=Redmine recurring tasks
+
+[Timer]
+# Runs every tenth minute
+OnCalendar=*-*-* *:*:00,10,20,30,40,50
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
 # Settings
 
 If you have any plugins, which for some reason doesn't copying in spawned issues, you can set specific issue associations fields in plugin settings. But be careful — this option can break work plugin scheduler.
