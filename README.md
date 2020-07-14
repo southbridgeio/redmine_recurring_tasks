@@ -117,7 +117,7 @@ Description=Redmine recurring tasks
 
 [Timer]
 # Runs every tenth minute
-OnCalendar=*-*-* *:*:00,10,20,30,40,50
+OnCalendar=*-*-* *:00,10,20,30,40,50:00
 Persistent=true
 
 [Install]
