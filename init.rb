@@ -1,4 +1,5 @@
-require 'redmine_recurring_tasks'
+require 'redmine'
+require_relative 'lib/redmine_recurring_tasks'
 
 reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
 reloader.to_prepare do
@@ -33,3 +34,5 @@ Redmine::Plugin.register :redmine_recurring_tasks do
     permission :manage_schedule, recurring_tasks: [:new, :edit, :destroy, :update], require: :loggedin
   end
 end
+
+require File.dirname(__FILE__) + '/lib/redmine_recurring_tasks'
