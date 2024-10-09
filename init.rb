@@ -1,4 +1,4 @@
-require 'redmine_recurring_tasks'
+require File.dirname(__FILE__) + '/lib/redmine_recurring_tasks'
 
 reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
 reloader.to_prepare do

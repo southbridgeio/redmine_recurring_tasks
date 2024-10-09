@@ -1,3 +1,7 @@
+# 0.3.5
+
+* Add compatibility with Redmine 5.1
+
 # 0.3.4
 
 * Add Translation Into Brazilian Portuguese
