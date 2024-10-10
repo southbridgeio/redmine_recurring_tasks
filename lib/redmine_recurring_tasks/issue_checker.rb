@@ -18,6 +18,7 @@ module RedmineRecurringTasks
           log_error(e)
           next
         rescue => e
+          Airbrake.notify(e) if defined?(Airbrake)
           log_error(e)
           next
         end
