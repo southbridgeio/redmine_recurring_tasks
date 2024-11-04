@@ -1,3 +1,7 @@
+# 0.3.6
+
+* Fix assigned to error
+
 # 0.3.5
 
 * Add compatibility with Redmine 5.1
