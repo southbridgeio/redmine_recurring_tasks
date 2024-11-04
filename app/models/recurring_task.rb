@@ -111,10 +111,12 @@ class RecurringTask < ActiveRecord::Base
             end
             original.author
           end
+        copy.assigned_to = nil if original.assigned_to.status == 3
         copy.custom_field_values = original.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
         copy.author_id = new_author.id
         copy.tracker_id = original.tracker_id
         copy.parent_issue_id = original.parent_id
+        copy.done_ratio = 0
         copy.status_id =
           case settings['copied_issue_status']
           when nil
