@@ -111,7 +111,7 @@ class RecurringTask < ActiveRecord::Base
             end
             original.author
           end
-        copy.assigned_to = nil if original.assigned_to.status == 3
+        copy.assigned_to = nil if original.assigned_to.blank? || original.assigned_to.status == User::STATUS_LOCKED
         copy.custom_field_values = original.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
         copy.author_id = new_author.id
         copy.tracker_id = original.tracker_id
