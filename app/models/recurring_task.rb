@@ -111,7 +111,7 @@ class RecurringTask < ActiveRecord::Base
             end
             original.author
           end
-        copy.assigned_to = nil if original.assigned_to.blank? || original.assigned_to.status == User::STATUS_LOCKED
+        copy.assigned_to = nil if original.assigned_to.blank? || original.assigned_to.status == User::STATUS_LOCKED || user_not_in_project?(original.assigned_to)
         copy.custom_field_values = original.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
         copy.author_id = new_author.id
         copy.tracker_id = original.tracker_id
@@ -169,5 +169,9 @@ class RecurringTask < ActiveRecord::Base
 
   def default_months
     (1..12).to_a.map(&:to_s)
+  end
+
+  def user_not_in_project?(user)
+    !issue.project.members.pluck(:user_id).include?(user.id)
   end
 end
