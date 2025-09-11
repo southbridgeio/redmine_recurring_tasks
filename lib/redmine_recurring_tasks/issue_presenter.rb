@@ -7,13 +7,13 @@ module RedmineRecurringTasks
       return '' if recurring_task.blank?
 
       if recurring_task_root.run_type == RecurringTask::RUN_TYPE_M_DAYS
-        return "#{recurring_task_root.month_days_parsed.join(', ')} #{recurring_task_root.months.map { |m| I18n.t('date.month_names')[m.to_i] }.join(', ')} — #{recurring_task_root.time.to_s(:time)}"
+        return "#{recurring_task_root.month_days_parsed.join(', ')} #{recurring_task_root.months.map { |m| I18n.t('date.month_names')[m.to_i] }.join(', ')} — #{recurring_task_root.time.strftime "%H:%M %z"}"
       end
 
       days = recurring_task_root.days.map do |field|
         <<-HTML
           <li>
-            #{RecurringTask.human_attribute_name(field)}, #{recurring_task_root.time.to_s(:time)}
+            #{RecurringTask.human_attribute_name(field)}, #{recurring_task_root.time.strftime "%H:%M %z"}
           </li>
         HTML
       end
