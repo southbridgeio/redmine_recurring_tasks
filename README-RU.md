@@ -46,19 +46,10 @@ bundle exec rake redmine_recurring_tasks:exec RAILS_ENV=production
 ```
 # /opt/redmine/config/initializers/zz-cron.rb
 
-class RecurringTaskWorker
-  include Sidekiq::Worker
-
-  def perform
-    checker = RedmineRecurringTasks::IssueChecker.new(Setting.plugin_redmine_recurring_tasks)
-    checker.call
-  end
-end
-
 cron_job_array = [
   {
     'name'  => 'Weekly schedule worker',
-    'class' => 'RecurringTaskWorker',
+    'class' => 'RecurringScheduleWorker',
     'cron'  => '*/5 * * * *'
   }
 ]

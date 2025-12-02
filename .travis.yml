@@ -3,9 +3,10 @@ rvm:
   - 2.4.9
   - 2.6.5
   - 2.7.2
+  - 3.3.10
 
 addons:
-  postgresql: "9.4"
+  postgresql: "11.22"
 
 env:
   - REDMINE_VER=3.4-stable; TZ=UTC
@@ -15,11 +16,14 @@ env:
   - REDMINE_VER=5.1-stable; TZ=Europe/Moscow
   - REDMINE_VER=5.1-stable; TZ=UTC
   - REDMINE_VER=5.1-stable; TZ=Europe/Dublin
+  - REDMINE_VER=6.1-stable; TZ=Europe/Moscow
+  - REDMINE_VER=6.1-stable; TZ=UTC
+  - REDMINE_VER=6.1-stable; TZ=Europe/Dublin
 
 matrix:
   exclude:
-  - rvm: 2.7.2
-    env: REDMINE_VER=5.1-stable; TZ=UTC
+  - rvm: 3.3.10
+    env: REDMINE_VER=6.1-stable; TZ=UTC
 
 branches:
   only:
