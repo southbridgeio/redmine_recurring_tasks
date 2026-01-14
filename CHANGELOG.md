@@ -1,3 +1,8 @@
+# 0.3.7
+
+* Add compatibility with Redmine 6.1
+* Add RecurringScheduleWorker native to plugin
+
 # 0.3.6
 
 * Fix assigned to error
