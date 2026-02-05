@@ -140,7 +140,14 @@ class RecurringTask < ActiveRecord::Base
       else
         next
       end
-    end.tap(&:save!)
+    end.tap do |copy|
+      copy.save!
+      IssueRelation.create(
+        issue_from_id: issue.id,
+        issue_to_id: copy.id,
+        relation_type: IssueRelation::TYPE_COPIED_TO
+      )
+    end
   end
 
   # @return [Boolean] boolean result of copy issue and save of schedule last try timestamp
@@ -172,6 +179,13 @@ class RecurringTask < ActiveRecord::Base
   end
 
   def user_not_in_project?(user)
-    !issue.project.members.pluck(:user_id).include?(user.id)
+    project_user_ids = issue.project.members.pluck(:user_id)
+
+    if user.type == 'Group'
+      # Group is valid if at least one of members is a member of the project.
+      (user.user_ids & project_user_ids).empty?
+    else
+      !project_user_ids.include?(user.id)
+    end
   end
 end
