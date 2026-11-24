@@ -101,15 +101,20 @@ class RecurringTask < ActiveRecord::Base
     issue.deep_clone(include: associations, except: %i[parent_id root_id lft rgt created_on updated_on closed_on]) do |original, copy|
       case original
       when Issue
-        copy.init_journal(original.author)
+        # Read the association directly: other plugins may override Issue#author
+        # with a wrapper that is not a User (redmine_contacts_helpdesk returns
+        # HelpdeskAuthorProxy < SimpleDelegator for tickets from anonymous contacts),
+        # and belongs_to assignments like init_journal reject it with AssociationTypeMismatch.
+        author = original.association(:author).reader
+        copy.init_journal(author)
         new_author =
           if settings['use_anonymous_user']
             User.anonymous
           else
-            unless original.author.allowed_to?(:copy_issues, issue.project)
-              raise UnauthorizedError, "User #{original.author.name} (##{original.author.id}) unauthorized to copy issues"
+            unless author.allowed_to?(:copy_issues, issue.project)
+              raise UnauthorizedError, "User #{author.name} (##{author.id}) unauthorized to copy issues"
             end
-            original.author
+            author
           end
         copy.assigned_to = nil if original.assigned_to.blank? || original.assigned_to.status == User::STATUS_LOCKED || user_not_in_project?(original.assigned_to)
         copy.custom_field_values = original.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
@@ -120,7 +125,7 @@ class RecurringTask < ActiveRecord::Base
         copy.status_id =
           case settings['copied_issue_status']
           when nil
-            copy.new_statuses_allowed_to(original.author).sort_by(&:position).first&.id
+            copy.new_statuses_allowed_to(author).sort_by(&:position).first&.id
           when '0'
             original.status_id
           else
