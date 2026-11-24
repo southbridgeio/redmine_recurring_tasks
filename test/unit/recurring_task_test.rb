@@ -100,6 +100,21 @@ class RecurringTaskTest < ActiveSupport::TestCase
     assert default_schedule.copy_issue.author_id == User.anonymous.id
   end
 
+  # redmine_contacts_helpdesk overrides Issue#author with HelpdeskAuthorProxy < SimpleDelegator,
+  # which is not a User and is rejected by belongs_to assignments (init_journal).
+  def test_copy_when_author_is_wrapped_by_delegator
+    Setting.plugin_redmine_recurring_tasks = { 'use_anonymous_user' => nil }
+    issue = Issue.find(1)
+    wrapped_author = SimpleDelegator.new(issue.author)
+    issue.define_singleton_method(:author) { wrapped_author }
+    schedule = RecurringTask.create!(issue: issue, tracker: issue.tracker)
+
+    copied_issue = schedule.copy_issue
+
+    assert copied_issue.persisted?
+    assert_equal issue.author_id, copied_issue.author_id
+  end
+
   def test_copy_when_project_is_closed
     assert closed_project_schedule.copy_issue.nil?
   end
